@@ -142,7 +142,6 @@
         .card-actions { display: flex; gap: 5px; border-top: 1px solid #eee; padding-top: 10px; }
         .action-icon-btn { background: #f0f0f0; border: none; border-radius: 8px; padding: 6px 10px; font-size: 1em; cursor: pointer; color: #555; }
         .action-icon-btn:hover { background: #e0e0e0; }
-        .action-icon-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
         /* Floating Action Button (Add) */
         .fab-btn {
@@ -169,7 +168,6 @@
         
         .calculator-box { background: #fff; border-radius: 15px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); border: 1px solid #eee; text-align: right;}
         
-        /* Input wrappers for currency */
         .currency-input-wrapper { position: relative; flex: 1; }
         .currency-symbol { position: absolute; right: 10px; top: 11px; color: #888; font-weight: bold;}
         .currency-input { width: 100%; padding: 10px 30px 10px 10px; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; font-family: inherit; font-size: 16px;}
@@ -180,6 +178,11 @@
         .check-item.done .check-text { text-decoration: line-through; color: #999; }
         .check-label { display: flex; align-items: center; gap: 12px; cursor: pointer; flex-grow:1; margin:0; font-size: 1em;}
         .custom-checkbox { width: 22px; height: 22px; cursor: pointer; accent-color: var(--accent-red);}
+
+        /* Sync Box */
+        .sync-box { background: #e8f4fd; border: 1px solid #b3d7ff; border-radius: 15px; padding: 15px; margin-bottom: 20px; text-align: right; }
+        .loader { display: none; margin: 10px auto; border: 4px solid #f3f3f3; border-top: 4px solid #007bff; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite;}
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* Bottom Nav */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 450px; background: rgba(255, 255, 255, 0.98); box-shadow: 0 -2px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; padding: 10px 5px 20px 5px; border-top: 1px solid #eee; z-index: 100; box-sizing: border-box;}
@@ -271,10 +274,21 @@
     <div id="view-tools" class="view-section">
         <div class="section-title">כלים ומסמכים 💼</div>
 
+        <!-- כלי סנכרון גוגל שיטס -->
+        <div class="sync-box">
+            <div style="font-weight: 600; margin-bottom: 5px; color: #004085;">☁️ סנכרון עם מסד נתונים (Google Sheets)</div>
+            <p style="font-size: 0.85em; color: #333; margin: 0 0 10px 0;">שמור או משוך נתונים מהענן כדי שכולם יראו את אותו הדבר.</p>
+            <div style="display: flex; gap: 8px;">
+                <button onclick="saveToCloud()" style="flex:1; background:#007bff; color:white; border:none; padding:8px; border-radius:6px; font-weight:bold; cursor:pointer; font-family:inherit;">☁️ שמור לענן</button>
+                <button onclick="loadFromCloud()" style="flex:1; background:#28a745; color:white; border:none; padding:8px; border-radius:6px; font-weight:bold; cursor:pointer; font-family:inherit;">🔄 טען מהענן</button>
+            </div>
+            <div id="sync-loader" class="loader"></div>
+            <div id="sync-msg" style="font-size: 0.8em; margin-top: 5px; font-weight: bold;"></div>
+        </div>
+
         <!-- ארגז כלים פיננסי -->
         <h3 style="font-size: 1.1em; color: #777; margin: 20px 0 10px 0; border-bottom: 1px dashed #ddd; padding-bottom: 5px;">💵 ארגז כלים פיננסי</h3>
         
-        <!-- המרת מטבע כפולה וחיה -->
         <div class="calculator-box">
             <div style="font-weight: 600; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
                 <span>המרה חיה (דולר ⇄ שקל)</span>
@@ -293,7 +307,6 @@
             </div>
         </div>
 
-        <!-- מחשבון טיפים -->
         <div class="calculator-box">
             <div style="font-weight: 600; margin-bottom: 10px;">מחשבון טיפים למסעדה</div>
             <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
@@ -316,7 +329,7 @@
         <button class="fab-btn" style="background: var(--pastel-blue); color: #004d66; bottom: 95px;" onclick="openAddDocModal()">+</button>
     </div>
 
-    <!-- תפריט תחתון (5 כפתורים) -->
+    <!-- תפריט תחתון -->
     <nav class="bottom-nav">
         <button class="nav-item active" onclick="switchView('view-home', this)"><span class="nav-icon">🗽</span><span>היום</span></button>
         <button class="nav-item" onclick="switchView('view-todo', this)"><span class="nav-icon">🧭</span><span>מקומות</span></button>
@@ -325,7 +338,7 @@
         <button class="nav-item" onclick="switchView('view-tools', this)"><span class="nav-icon">💼</span><span>כלים</span></button>
     </nav>
 
-    <!-- Modals (כולם פה) -->
+    <!-- Modals -->
     <div id="info-modal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -430,7 +443,7 @@
                 <form id="add-check-form" onsubmit="saveCheckItem(event)">
                     <div class="form-group"><label>תיאור המשימה / פריט:</label><input type="text" id="new-check-text" required></div>
                     <div class="form-group">
-                        <label>קטגוריה (בחרו או הקלידו חדשה):</label>
+                        <label>קטגוריה:</label>
                         <input type="text" id="new-check-cat" list="check-cats" required placeholder="למשל: ציוד אישי">
                         <datalist id="check-cats">
                             <option value="מסמכים וטיסה">
@@ -447,6 +460,13 @@
 </div>
 
 <script>
+
+    // ----------------------------------------------------------------------
+    // !!!!!!!!!!! הדבק את הקישור שקיבלת מגוגל בין הגרשיים כאן !!!!!!!!!!!
+    // ----------------------------------------------------------------------
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzy4B6_J2K5sxnq2UKQYn4DhPXSywyqn2UFL-a3Ay47FtZgHC0GvdB2pP2WrV2m5LCPFQ/exec'; 
+    // ----------------------------------------------------------------------
+
     // --- ספירה לאחור ---
     const countDownDate = new Date("Sep 27, 2026 00:30:00").getTime();
     setInterval(function() {
@@ -462,6 +482,83 @@
     function saveData(key, data) {
         localStorage.setItem(key, JSON.stringify(data));
     }
+
+    // --- סנכרון עם ענן (Google Sheets) ---
+    function getAllKeysForSync() {
+        return {
+            'trip2026_days': localStorage.getItem('trip2026_days'),
+            'trip2026_dests': localStorage.getItem('trip2026_dests'),
+            'trip2026_places': localStorage.getItem('trip2026_places'),
+            'trip2026_checklist': localStorage.getItem('trip2026_checklist'),
+            'trip2026_docs': localStorage.getItem('trip2026_docs')
+        };
+    }
+
+    async function saveToCloud() {
+        if(GOOGLE_SCRIPT_URL === 'הדבק_כאן_את_הקישור_שלך') {
+            alert("❌ שגיאה: לא הגדרת את הקישור ל-Google Script בקוד של האפליקציה (GOOGLE_SCRIPT_URL).");
+            return;
+        }
+
+        const loader = document.getElementById('sync-loader');
+        const msg = document.getElementById('sync-msg');
+        loader.style.display = 'block';
+        msg.innerText = 'שומר לענן...';
+        msg.style.color = '#007bff';
+
+        const payload = JSON.stringify(getAllKeysForSync());
+
+        try {
+            await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: payload
+            });
+            msg.innerText = '✅ נשמר בהצלחה במסד הנתונים!';
+            msg.style.color = 'green';
+        } catch (error) {
+            msg.innerText = '❌ שגיאה בשמירה. נסה שוב.';
+            msg.style.color = 'red';
+            console.error(error);
+        }
+        loader.style.display = 'none';
+    }
+
+    async function loadFromCloud() {
+        if(GOOGLE_SCRIPT_URL === 'הדבק_כאן_את_הקישור_שלך') {
+            alert("❌ שגיאה: לא הגדרת את הקישור ל-Google Script בקוד של האפליקציה.");
+            return;
+        }
+
+        const loader = document.getElementById('sync-loader');
+        const msg = document.getElementById('sync-msg');
+        loader.style.display = 'block';
+        msg.innerText = 'מושך נתונים מהענן...';
+        msg.style.color = '#007bff';
+
+        try {
+            const res = await fetch(GOOGLE_SCRIPT_URL);
+            const data = await res.json();
+            
+            // בדיקה שבאמת קיבלנו מידע מלא
+            if(data && typeof data === 'object' && Object.keys(data).length > 0) {
+                Object.keys(data).forEach(k => {
+                    if (data[k]) localStorage.setItem(k, data[k]);
+                });
+                msg.innerText = '✅ הנתונים עודכנו! האפליקציה תתרענן כעת.';
+                msg.style.color = 'green';
+                setTimeout(() => location.reload(), 1500); // ריענון דף לטעינת הנתונים החדשים
+            } else {
+                msg.innerText = '⚠️ לא נמצאו נתונים שמורים בענן.';
+                msg.style.color = 'orange';
+            }
+        } catch (error) {
+            msg.innerText = '❌ שגיאה במשיכת הנתונים.';
+            msg.style.color = 'red';
+            console.error(error);
+        }
+        loader.style.display = 'none';
+    }
+
 
     // --- ניווט ומודאלים ---
     function switchView(viewId, btnElement) {
@@ -481,56 +578,40 @@
         });
     });
 
-    // --- משיכת שער המטבע ב-API ---
-    let exchangeRate = 3.65; // גיבוי הגיוני במקרה שאין רשת בכלל בהפעלה הראשונה
+    // --- שער המטבע החי ---
+    let exchangeRate = 3.65; 
     const rateKey = 'trip2026_exchange_rate';
-    
-    // בדיקה האם כבר שמרנו שער בעבר
     const savedRate = localStorage.getItem(rateKey);
     if (savedRate) exchangeRate = parseFloat(savedRate);
 
     async function fetchLiveExchangeRate() {
         try {
-            // קריאה לשירות חינמי שלא מצריך מפתח (API Key)
             const response = await fetch('https://open.er-api.com/v6/latest/USD');
             const data = await response.json();
-            
             if (data && data.rates && data.rates.ILS) {
                 exchangeRate = data.rates.ILS;
-                localStorage.setItem(rateKey, exchangeRate); // שומר לשימוש ללא אינטרנט
-                document.getElementById('rate-indicator').innerText = `1$ = ${exchangeRate.toFixed(2)}₪`;
+                localStorage.setItem(rateKey, exchangeRate);
+                document.getElementById('rate-indicator').innerText = `1$ = ${exchangeRate.toFixed(2)}₪ (חיי)`;
                 document.getElementById('rate-indicator').style.color = '#27ae60';
                 document.getElementById('rate-indicator').style.background = '#eaf5e9';
             }
         } catch (error) {
-            console.log("Offline or API failed, using fallback rate.");
-            document.getElementById('rate-indicator').innerText = `מצב לא מקוון (${exchangeRate.toFixed(2)}₪)`;
+            document.getElementById('rate-indicator').innerText = `שער שמור (${exchangeRate.toFixed(2)}₪)`;
         }
     }
 
-    // פונקציית ההמרה הדו-כיוונית
     function convertCurrency(source) {
         const usdInput = document.getElementById('usd-convert');
         const ilsInput = document.getElementById('ils-convert');
-        
         if (source === 'USD') {
             const usdVal = parseFloat(usdInput.value);
-            if (!isNaN(usdVal)) {
-                ilsInput.value = (usdVal * exchangeRate).toFixed(2);
-            } else {
-                ilsInput.value = '';
-            }
+            ilsInput.value = !isNaN(usdVal) ? (usdVal * exchangeRate).toFixed(2) : '';
         } else if (source === 'ILS') {
             const ilsVal = parseFloat(ilsInput.value);
-            if (!isNaN(ilsVal)) {
-                usdInput.value = (ilsVal / exchangeRate).toFixed(2);
-            } else {
-                usdInput.value = '';
-            }
+            usdInput.value = !isNaN(ilsVal) ? (ilsVal / exchangeRate).toFixed(2) : '';
         }
     }
 
-    // פונקציית טיפים
     function calculateTip() {
         const bill = parseFloat(document.getElementById('bill-input').value) || 0;
         const tipPct = parseFloat(document.getElementById('tip-percent').value) || 0;
@@ -540,9 +621,7 @@
         document.getElementById('total-with-tip').innerText = '$' + total.toFixed(2);
     }
 
-    // --- שאר הפונקציות: ימים, יעדים, צ'קליסט, מסמכים ---
-    
-    // (הדאטה מוקטן כאן קצת לנוחות הזרקת קוד, אבל הוא יעבוד פיקס)
+    // --- ימים ---
     const defaultDays = [
         { id: 'day1', icon: '🛬', color: 'var(--pastel-green)', title: 'יום 1 (27.9) - מתחילים!', desc: 'נחיתה, רכב, ונסיעה לטבע באיתקה', content: '<h4><span class="time-badge">05:15</span> נחיתה ורכב</h4><p>נחיתה בניוארק, איסוף מזוודות ורכב שכור.</p>' },
         { id: 'day2', icon: '🌊', color: 'var(--pastel-blue)', title: 'יום 2 (28.9) - מפלי הניאגרה', desc: 'הגעה למפלים בצד האמריקאי', content: '<h4><span class="time-badge">12:00</span> המפלים</h4><p>צ\'ק אין במלון Seneca Niagara.</p>' },
@@ -639,7 +718,7 @@
     let currentFilter = 'all';
 
     const defaultPlaces = [
-        { dest: 'ithaca', category: 'מסעדה', name: 'Ithaca Beer Co.', rating: 4.6, price: '$$', hours: '12:00 - 21:00', distance: '10 דק׳', address: '122 Ithaca Beer Dr, NY', desc: 'מבשלה עם מדשאות ענק, המבורגרים ופיצות.' },
+        { dest: 'ithaca', category: 'מסעדה', name: 'Ithaca Beer Co.', rating: 4.6, price: '$$', hours: '12:00 - 21:00', distance: '10 דק׳', address: '122 Ithaca Beer Dr, NY', desc: 'מבשלה עם מדשאות ענק.' },
         { dest: 'niagara', category: 'אטרקציה', name: 'Maid of the Mist', rating: 4.7, price: '$$', hours: '09:00 - 17:00', distance: 'קרוב למלון', address: '1 Prospect St, NY', desc: 'השייט המפורסם.' },
         { dest: 'nyc', category: 'מסעדה', name: 'Carmine\'s Italian', rating: 4.5, price: '$$', hours: '11:30 - 23:00', distance: 'קרוב לאדיסון', address: '200 W 44th St, NY', desc: 'אוכל איטלקי ענקי לחלוקה.' }
     ];
@@ -835,7 +914,6 @@
         renderChecklist();
     }
 
-    // --- מפה חיה ---
     function changeMap(query, btn) {
         document.querySelectorAll('#view-livemap .filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
@@ -912,13 +990,11 @@
         }
     }
 
-    // הפעלות בהתחלה
+    // הפעלה ראשונית
     renderDays();
     renderDestinations();
     renderChecklist();
     renderDocs();
-    
-    // הפעלת פונקציית משיכת שער חליפין
     fetchLiveExchangeRate();
 
 </script>
