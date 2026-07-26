@@ -114,16 +114,13 @@
         .places-header { display: flex; align-items: center; margin-bottom: 15px; }
         .back-btn { background: #f0f0f0; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 1.2em; cursor: pointer; margin-left: 15px; }
         
-        .filter-bar { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; }
-        .filter-bar::-webkit-scrollbar { display: none; }
-        .filter-btn { padding: 8px 16px; border-radius: 20px; background: #f0f0f0; border: none; color: #555; white-space: nowrap; font-weight: 600; cursor: pointer; font-family: inherit; }
-        .filter-btn.active { background: #4a4036; color: #fff; }
+        .filter-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .filter-select { padding: 10px; border-radius: 8px; flex: 1; border: 1px solid #ddd; font-family: inherit; font-size: 14px; min-width: 120px;}
 
         .place-card { background: var(--card-bg); border-radius: 15px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-right: 4px solid #ddd; position: relative; }
         .place-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
         .place-title h4 { margin: 0 0 5px 0; font-size: 1.15em; color: var(--text-main); }
         .place-type { font-size: 0.75em; color: #fff; padding: 3px 8px; border-radius: 5px; display: inline-block; }
-        .place-rating { display: flex; align-items: center; gap: 5px; font-weight: 600; color: #f5b041; background: #fff8e1; padding: 3px 8px; border-radius: 8px; font-size: 0.85em;}
         
         .place-meta { font-size: 0.85em; color: #666; margin-bottom: 10px; display: grid; grid-template-columns: 1fr; gap: 5px; background: #f9f9f9; padding: 10px; border-radius: 8px;}
         .meta-item { display: flex; align-items: center; gap: 6px; }
@@ -203,6 +200,11 @@
         .close-btn { background: #f0f0f0; border: none; width: 35px; height: 35px; border-radius: 50%; font-size: 1.2em; font-weight: bold; color: #555; cursor: pointer; }
         .modal-body { font-size: 1em; line-height: 1.6; color: #444; overflow-y: auto; padding-left: 5px;}
 
+        /* Live Map Buttons Fix */
+        .map-filter-bar { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; }
+        .map-filter-bar::-webkit-scrollbar { display: none; }
+        .map-filter-btn { padding: 8px 16px; border-radius: 20px; background: #f0f0f0; border: none; color: #555; white-space: nowrap; font-weight: 600; cursor: pointer; font-family: inherit; }
+        .map-filter-btn.active { background: #4a4036; color: #fff; }
     </style>
 </head>
 <body>
@@ -237,13 +239,34 @@
                 <button class="back-btn" onclick="closeDestination()">➔</button>
                 <div class="section-title" id="current-dest-title" style="margin: 0;">המלצות</div>
             </div>
+            
+            <!-- אזור הסינון החכם -->
             <div class="filter-bar" id="category-filters">
-                <button class="filter-btn active" onclick="filterPlaces('all')">הכל</button>
-                <button class="filter-btn" onclick="filterPlaces('מסעדה')">מסעדות</button>
-                <button class="filter-btn" onclick="filterPlaces('קפה')">בתי קפה</button>
-                <button class="filter-btn" onclick="filterPlaces('אטרקציה')">אטרקציות</button>
-                <button class="filter-btn" onclick="filterPlaces('שופינג')">שופינג</button>
+                <select id="category-filter" class="filter-select" onchange="filterPlaces()">
+                    <option value="all">כל הקטגוריות</option>
+                    <option value="מסעדה">מסעדות 🍽️</option>
+                    <option value="קפה">בתי קפה ☕</option>
+                    <option value="אטרקציה">אטרקציות 🗽</option>
+                    <option value="שופינג">שופינג 🛍️</option>
+                </select>
+
+                <select id="region-filter" class="filter-select" onchange="filterPlaces()">
+                    <option value="all">כל האזורים</option>
+                    <option value="midtown">מידטאון</option>
+                    <option value="downtown">דאונטאון</option>
+                    <option value="chelsea">צ'לסי</option>
+                    <option value="brooklyn">ברוקלין</option>
+                    <option value="nj">ניו ג'רזי</option>
+                </select>
+
+                <select id="crowd-filter" class="filter-select" onchange="filterPlaces()">
+                    <option value="all">עומס: הכל</option>
+                    <option value="low">רגוע 🌿</option>
+                    <option value="medium">זרימה סבירה 🚶</option>
+                    <option value="high">עמוס ותוסס ⚡</option>
+                </select>
             </div>
+            
             <div id="places-container"></div>
             <button class="fab-btn" onclick="openAddPlaceModal()">+</button>
         </div>
@@ -259,11 +282,11 @@
     <!-- מסך 4: מפה חיה -->
     <div id="view-livemap" class="view-section">
         <div class="section-title">מפה חיה 🗺️ <br><span style="font-size: 0.6em; font-weight: normal; color: #888;">נווטו בקלות באזור שלכם</span></div>
-        <div class="filter-bar">
-            <button class="filter-btn active" onclick="changeMap('Ithaca, NY', this)">איתקה</button>
-            <button class="filter-btn" onclick="changeMap('Niagara Falls, NY', this)">ניאגרה</button>
-            <button class="filter-btn" onclick="changeMap('Harrisburg, PA', this)">האריסברג</button>
-            <button class="filter-btn" onclick="changeMap('Times Square, NY', this)">ניו יורק</button>
+        <div class="map-filter-bar">
+            <button class="map-filter-btn active" onclick="changeMap('Ithaca, NY', this)">איתקה</button>
+            <button class="map-filter-btn" onclick="changeMap('Niagara Falls, NY', this)">ניאגרה</button>
+            <button class="map-filter-btn" onclick="changeMap('Harrisburg, PA', this)">האריסברג</button>
+            <button class="map-filter-btn" onclick="changeMap('Times Square, NY', this)">ניו יורק</button>
         </div>
         <div style="border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 2px solid #fff;">
             <iframe id="live-map-frame" width="100%" height="450" frameborder="0" style="border:0;" src="https://maps.google.com/maps?q=Ithaca,NY&t=&z=12&ie=UTF8&iwloc=&output=embed" allowfullscreen></iframe>
@@ -499,7 +522,6 @@
             alert("❌ שגיאה: לא הגדרת את הקישור ל-Google Script בקוד של האפליקציה (GOOGLE_SCRIPT_URL).");
             return;
         }
-
         const loader = document.getElementById('sync-loader');
         const msg = document.getElementById('sync-msg');
         loader.style.display = 'block';
@@ -507,12 +529,8 @@
         msg.style.color = '#007bff';
 
         const payload = JSON.stringify(getAllKeysForSync());
-
         try {
-            await fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                body: payload
-            });
+            await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: payload });
             msg.innerText = '✅ נשמר בהצלחה במסד הנתונים!';
             msg.style.color = 'green';
         } catch (error) {
@@ -528,7 +546,6 @@
             alert("❌ שגיאה: לא הגדרת את הקישור ל-Google Script בקוד של האפליקציה.");
             return;
         }
-
         const loader = document.getElementById('sync-loader');
         const msg = document.getElementById('sync-msg');
         loader.style.display = 'block';
@@ -539,14 +556,13 @@
             const res = await fetch(GOOGLE_SCRIPT_URL);
             const data = await res.json();
             
-            // בדיקה שבאמת קיבלנו מידע מלא
             if(data && typeof data === 'object' && Object.keys(data).length > 0) {
                 Object.keys(data).forEach(k => {
                     if (data[k]) localStorage.setItem(k, data[k]);
                 });
                 msg.innerText = '✅ הנתונים עודכנו! האפליקציה תתרענן כעת.';
                 msg.style.color = 'green';
-                setTimeout(() => location.reload(), 1500); // ריענון דף לטעינת הנתונים החדשים
+                setTimeout(() => location.reload(), 1500);
             } else {
                 msg.innerText = '⚠️ לא נמצאו נתונים שמורים בענן.';
                 msg.style.color = 'orange';
@@ -558,7 +574,6 @@
         }
         loader.style.display = 'none';
     }
-
 
     // --- ניווט ומודאלים ---
     function switchView(viewId, btnElement) {
@@ -572,6 +587,7 @@
     function closeModal(modalId) {
         document.getElementById(modalId).classList.remove('active');
     }
+    
     document.querySelectorAll('.modal-overlay').forEach(modal => {
         modal.addEventListener('click', function(e) {
             if (e.target === this) closeModal(this.id);
@@ -715,23 +731,45 @@
     }
 
     let currentDestination = '';
-    let currentFilter = 'all';
 
     const defaultPlaces = [
+        // Ithaca
         { dest: 'ithaca', category: 'מסעדה', name: 'Ithaca Beer Co.', rating: 4.6, price: '$$', hours: '12:00 - 21:00', distance: '10 דק׳', address: '122 Ithaca Beer Dr, NY', desc: 'מבשלה עם מדשאות ענק.' },
+        
+        // Niagara (הוספנו את ה-4 שביקשת!)
         { dest: 'niagara', category: 'אטרקציה', name: 'Maid of the Mist', rating: 4.7, price: '$$', hours: '09:00 - 17:00', distance: 'קרוב למלון', address: '1 Prospect St, NY', desc: 'השייט המפורסם.' },
-        { dest: 'nyc', category: 'מסעדה', name: 'Carmine\'s Italian', rating: 4.5, price: '$$', hours: '11:30 - 23:00', distance: 'קרוב לאדיסון', address: '200 W 44th St, NY', desc: 'אוכל איטלקי ענקי לחלוקה.' }
+        { dest: 'niagara', category: 'מסעדה', name: 'Antica Pizzeria & Ristorante', rating: 4.5, price: '$$', hours: '12:00 - 22:00', distance: '3 דקות הליכה', address: '5785 Victoria Ave, Niagara Falls', desc: 'מסעדה איטלקית מעולה ומרווחת עם פיצות בתנור עצים ופסטות.' },
+        { dest: 'niagara', category: 'מסעדה', name: 'Sandstone Grillhouse', rating: 4.4, price: '$$-$$$', hours: '16:00 - 22:30', distance: '6 דקות הליכה', address: '5467 Victoria Ave, Niagara Falls', desc: 'מסעדה באווירה טובה שמגישה סטייקים, פירות ים ומנות קלאסיות.' },
+        { dest: 'niagara', category: 'קפה', name: 'Tim Hortons', rating: 4.2, price: '$', hours: '06:00 - 22:00', distance: '4 דקות הליכה', address: '5543 Victoria Ave, Niagara Falls', desc: 'חוויית חובה קנדית! קפה ודונאט ברשת המפורסמת ביותר.' },
+        { dest: 'niagara', category: 'קפה', name: 'Starbucks (Clifton Hill)', rating: 4.3, price: '$$', hours: '06:30 - 23:00', distance: '10 דקות הליכה', address: '4960 Clifton Hill, Niagara Falls', desc: 'נקודה מושלמת לעצור בה, לקחת קפה לדרך, ולהמשיך ברגל לתצפית.' },
+        
+        // NYC & NJ
+        { dest: 'nyc', category: 'מסעדה', region: 'midtown', crowd: 'high', name: 'Carmine\'s Italian', rating: 4.5, price: '$$', hours: '11:30 - 23:00', distance: 'קרוב לאדיסון', address: '200 W 44th St, NY', desc: 'אוכל איטלקי ענקי לחלוקה בטיימס סקוור.' },
+        { dest: 'nyc', category: 'שופינג', region: 'nj', crowd: 'medium', name: 'The Mills at Jersey Gardens', rating: 4.6, price: '$$', hours: '10:00 - 20:00', distance: 'כ-45 דקות מנהטן', address: '651 Kapkowski Rd, Elizabeth, NJ', desc: 'אאוטלט ענק ומקורה. אין מס על ביגוד והנעלה. שפע של חנויות ספורט עם מלאי מעולה למידות גדולות (47 ומעלה).' },
+        { dest: 'nyc', category: 'מסעדה', region: 'chelsea', crowd: 'high', name: 'Chelsea Market', rating: 4.7, price: '$$', hours: '08:00 - 21:00', distance: '20 דקות בסאבוויי', address: '75 9th Ave, New York, NY', desc: 'שוק אוכל מקורה ומטורף. עמוס יחסית אבל חוויה קולינרית.' }
     ];
 
     function openDestination(destId, destName) {
         currentDestination = destId;
-        currentFilter = 'all';
         document.getElementById('destinations-view').style.display = 'none';
         document.getElementById('places-view').style.display = 'block';
         document.getElementById('current-dest-title').innerText = "המלצות ב" + destName;
-        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-        document.querySelector('.filter-btn').classList.add('active');
-        renderPlaces();
+        
+        // איפוס תפריטי הסינון
+        document.getElementById("category-filter").value = "all";
+        document.getElementById("region-filter").value = "all";
+        document.getElementById("crowd-filter").value = "all";
+
+        // תצוגה חכמה: להראות את סינוני העומס והאזור רק בניו יורק
+        if (destId === 'nyc') {
+            document.getElementById("region-filter").style.display = 'block';
+            document.getElementById("crowd-filter").style.display = 'block';
+        } else {
+            document.getElementById("region-filter").style.display = 'none';
+            document.getElementById("crowd-filter").style.display = 'none';
+        }
+
+        filterPlaces();
     }
 
     function closeDestination() {
@@ -739,24 +777,29 @@
         document.getElementById('destinations-view').style.display = 'block';
     }
 
-    function filterPlaces(category) {
-        currentFilter = category;
-        document.querySelectorAll('#places-view .filter-btn').forEach(btn => {
-            if(btn.innerText.includes(category) || (category === 'all' && btn.innerText === 'הכל')) btn.classList.add('active');
-            else btn.classList.remove('active');
-        });
-        renderPlaces();
-    }
+    function filterPlaces() {
+        const categoryValue = document.getElementById("category-filter").value;
+        const regionValue = document.getElementById("region-filter").value;
+        const crowdValue = document.getElementById("crowd-filter").value;
 
-    function renderPlaces() {
         const container = document.getElementById('places-container');
         container.innerHTML = '';
         const allPlaces = getData('trip2026_places', defaultPlaces);
+        
         const filtered = allPlaces.map((p, index) => ({...p, originalIndex: index}))
-                                 .filter(p => p.dest === currentDestination && (currentFilter === 'all' || p.category === currentFilter));
+            .filter(place => {
+                // חייב להיות בעיר שנבחרה
+                if (place.dest !== currentDestination) return false;
+                
+                const matchCategory = categoryValue === "all" || place.category === categoryValue;
+                const matchRegion = regionValue === "all" || place.region === regionValue || !place.region;
+                const matchCrowd = crowdValue === "all" || place.crowd === crowdValue || !place.crowd;
+
+                return matchCategory && matchRegion && matchCrowd;
+            });
 
         if (filtered.length === 0) {
-            container.innerHTML = '<p style="text-align:center; color:#888; margin-top:20px;">אין מקומות בקטגוריה זו.</p>';
+            container.innerHTML = '<p style="text-align:center; color:#888; margin-top:20px;">לא מצאנו מקומות שמתאימים לסינון הזה.</p>';
             return;
         }
 
@@ -776,9 +819,9 @@
                         <div class="place-title"><h4>${place.name}</h4><span class="place-type" style="background-color: ${color};">${place.category}</span></div>
                     </div>
                     <div class="place-meta">
-                        <div class="meta-item"><span>🕒</span> ${place.hours}</div>
+                        <div class="meta-item"><span>🕒</span> ${place.hours || 'לא צוין'}</div>
                         <div class="meta-item"><span>💰</span> ${place.price}</div>
-                        <div class="meta-item"><span>📍</span> ${place.distance}</div>
+                        <div class="meta-item"><span>📍</span> ${place.distance || 'ניווט'}</div>
                     </div>
                     <p class="place-desc">${place.desc}</p>
                     <div class="nav-buttons">
@@ -813,6 +856,7 @@
             distance: document.getElementById('new-place-distance').value,
             address: document.getElementById('new-place-address').value,
             desc: document.getElementById('new-place-desc').value
+            // מקומות ידניים יופיעו בכל העומסים והאזורים כברירת מחדל
         };
 
         if (index === -1) allPlaces.push(placeData);
@@ -820,7 +864,7 @@
 
         saveData('trip2026_places', allPlaces);
         closeModal('add-place-modal');
-        renderPlaces();
+        filterPlaces();
     }
 
     function editPlace(index) {
@@ -841,7 +885,7 @@
             const allPlaces = getData('trip2026_places', defaultPlaces);
             allPlaces.splice(index, 1);
             saveData('trip2026_places', allPlaces);
-            renderPlaces();
+            filterPlaces();
         }
     }
 
@@ -915,7 +959,7 @@
     }
 
     function changeMap(query, btn) {
-        document.querySelectorAll('#view-livemap .filter-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.map-filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         document.getElementById('live-map-frame').src = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&t=&z=12&ie=UTF8&iwloc=&output=embed`;
     }
