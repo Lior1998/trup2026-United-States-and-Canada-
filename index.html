@@ -161,7 +161,7 @@
         .btn-waze { background: #33ccff; color: #004d66; }
         .btn-maps { background: #e3f2fd; color: #1976d2; }
         
-        /* Action buttons for places, docs & destinations */
+        /* Action buttons for places & docs */
         .card-actions { display: flex; gap: 5px; border-top: 1px solid #eee; padding-top: 10px; }
         .action-icon-btn { background: #f0f0f0; border: none; border-radius: 8px; padding: 6px 10px; font-size: 1em; cursor: pointer; color: #555; }
         .action-icon-btn:hover { background: #e0e0e0; }
@@ -266,13 +266,12 @@
     <!-- מסך 3: מה עושים -->
     <div id="view-todo" class="view-section">
         
-        <!-- כרטיסיות היעדים הראשיות (עכשיו דינמיות) -->
+        <!-- כרטיסיות היעדים הראשיות -->
         <div id="destinations-view">
             <div class="section-title">לאן יוצאים? <br><span style="font-size: 0.6em; font-weight: normal; color: #888;">מסעדות, אטרקציות וניווט</span></div>
             <div class="destinations-grid" id="destinations-grid">
                 <!-- Destinations generated dynamically here -->
             </div>
-            <button class="fab-btn" onclick="openAddDestModal()">+</button>
         </div>
 
         <!-- רשימת המקומות בתוך היעד -->
@@ -320,34 +319,6 @@
                 </div>
             </div>
             <div class="modal-body" id="modal-body"></div>
-        </div>
-    </div>
-
-    <!-- Add/Edit Destination Modal -->
-    <div id="add-dest-modal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title" id="dest-modal-title">הוספת יעד 🗺️</div>
-                <button class="close-btn" onclick="closeModal('add-dest-modal')">×</button>
-            </div>
-            <div class="modal-body">
-                <form id="add-dest-form" onsubmit="saveDest(event)">
-                    <input type="hidden" id="edit-dest-index" value="-1">
-                    <div class="form-group">
-                        <label>שם היעד (למשל: וושינגטון):</label>
-                        <input type="text" id="new-dest-name" required>
-                    </div>
-                    <div class="form-group">
-                        <label>אייקון (אימוג'י):</label>
-                        <input type="text" id="new-dest-icon" required placeholder="🏛️">
-                    </div>
-                    <div class="form-group">
-                        <label>צבע תחתון לכרטיסייה:</label>
-                        <input type="color" id="new-dest-color" value="#81c784" style="height: 40px; padding: 2px;">
-                    </div>
-                    <button type="submit" class="submit-btn">שמור יעד</button>
-                </form>
-            </div>
         </div>
     </div>
 
@@ -597,92 +568,15 @@
                         <div class="dest-icon">${dest.icon}</div>
                         <div class="dest-name">${dest.name}</div>
                     </button>
-                    <div class="card-actions" style="justify-content: space-between; border: none; padding-top: 0; gap: 2px;">
-                        <div style="display:flex; gap:2px;">
-                            <button class="action-icon-btn" style="padding:4px 6px; font-size:0.85em;" onclick="moveDest(${i}, -1)" ${i === 0 ? 'disabled' : ''}>◀️</button>
-                            <button class="action-icon-btn" style="padding:4px 6px; font-size:0.85em;" onclick="moveDest(${i}, 1)" ${i === dests.length - 1 ? 'disabled' : ''}>▶️</button>
-                        </div>
-                        <div style="display:flex; gap:2px;">
-                            <button class="action-icon-btn" style="padding:4px 6px; font-size:0.85em;" onclick="editDest(${i})">✏️</button>
-                            <button class="action-icon-btn" style="padding:4px 6px; font-size:0.85em; color:#e74c3c;" onclick="deleteDest(${i})">🗑️</button>
-                        </div>
-                    </div>
                 </div>
             `;
         });
     }
 
-    function moveDest(index, direction) {
-        const dests = getData('trip2026_dests', defaultDestinations);
-        const target = index + direction;
-        if(target >= 0 && target < dests.length) {
-            const temp = dests[index];
-            dests[index] = dests[target];
-            dests[target] = temp;
-            saveData('trip2026_dests', dests);
-            renderDestinations();
-        }
-    }
-
-    function deleteDest(index) {
-        if(confirm("למחוק יעד זה (כל המקומות ששמורים תחתיו לא יוצגו יותר)?")) {
-            const dests = getData('trip2026_dests', defaultDestinations);
-            dests.splice(index, 1);
-            saveData('trip2026_dests', dests);
-            renderDestinations();
-        }
-    }
-
-    function openAddDestModal() {
-        document.getElementById('edit-dest-index').value = '-1';
-        document.getElementById('dest-modal-title').innerText = 'הוספת יעד 🗺️';
-        document.getElementById('add-dest-form').reset();
-        document.getElementById('new-dest-color').value = '#81c784';
-        document.getElementById('add-dest-modal').classList.add('active');
-    }
-
-    function editDest(index) {
-        const dests = getData('trip2026_dests', defaultDestinations);
-        const dest = dests[index];
-        document.getElementById('edit-dest-index').value = index;
-        document.getElementById('dest-modal-title').innerText = 'עריכת יעד ✏️';
-        document.getElementById('new-dest-name').value = dest.name;
-        document.getElementById('new-dest-icon').value = dest.icon;
-        document.getElementById('new-dest-color').value = dest.color;
-        document.getElementById('add-dest-modal').classList.add('active');
-    }
-
-    function saveDest(event) {
-        event.preventDefault();
-        const dests = getData('trip2026_dests', defaultDestinations);
-        const index = parseInt(document.getElementById('edit-dest-index').value);
-        
-        const newId = 'dest-' + Date.now();
-        
-        const newDest = {
-            id: index === -1 ? newId : dests[index].id,
-            name: document.getElementById('new-dest-name').value,
-            icon: document.getElementById('new-dest-icon').value,
-            color: document.getElementById('new-dest-color').value
-        };
-
-        if (index === -1) {
-            dests.push(newDest);
-        } else {
-            dests[index] = newDest;
-        }
-
-        saveData('trip2026_dests', dests);
-        closeModal('add-dest-modal');
-        renderDestinations();
-    }
-
-
     // --- לוגיקת מקומות בתוך יעדים ---
     let currentDestination = '';
     let currentFilter = 'all';
 
-    // החזרתי את הרשימה המלאה כדי שלא יאבדו לך המקומות המקוריים
     const defaultPlaces = [
         { dest: 'ithaca', category: 'מסעדה', name: 'Ithaca Beer Co.', rating: 4.6, price: '$$', hours: '12:00 - 21:00', distance: '10 דק׳ נסיעה מהמרכז', address: '122 Ithaca Beer Dr, Ithaca, NY 14850', desc: 'מבשלה עם מדשאות ענק, המבורגרים ופיצות. מושלם לצהריים אחרי הנסיעה.' },
         { dest: 'ithaca', category: 'אטרקציה', name: 'Taughannock Falls', rating: 4.8, price: '$', hours: 'זריחה עד שקיעה', distance: '15 דק׳ נסיעה', address: 'Taughannock Falls State Park, NY', desc: 'מסלול הליכה שטוח וקליל של 20 דקות למפל עוצר נשימה (גבוה מניאגרה!).' },
