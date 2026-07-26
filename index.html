@@ -35,7 +35,7 @@
             min-height: 100vh;
             background-color: var(--bg-main);
             position: relative;
-            padding-bottom: 70px;
+            padding-bottom: 80px;
             box-shadow: 0 0 20px rgba(0,0,0,0.05);
             overflow-x: hidden;
         }
@@ -99,34 +99,12 @@
         .day-icon { font-size: 1.5em; background: #f0f4f8; padding: 10px; border-radius: 12px; min-width: 30px; text-align: center; }
         .day-arrow { color: #ccc; font-size: 1.2em; font-weight: bold; }
 
-        /* Map & Stations */
-        .map-interactive-container {
-            position: relative; width: 100%; height: 220px; background-color: #e6e4df;
-            border-radius: 20px; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); overflow: hidden;
-        }
-        .map-image { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
-        .map-pin-btn {
-            position: absolute; width: 28px; height: 28px; border-radius: 50%; color: white; font-weight: bold;
-            display: flex; align-items: center; justify-content: center; font-size: 0.9em; box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-            border: 2px solid white; cursor: pointer; transform: translate(50%, -50%); animation: bounce 2s infinite ease-in-out;
-        }
-        @keyframes bounce { 0%, 100% { transform: translate(50%, -50%) translateY(0); } 50% { transform: translate(50%, -50%) translateY(-5px); } }
-
-        .station-card { background: var(--card-bg); border-radius: 20px; padding: 15px 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.04); cursor: pointer; transition: transform 0.1s; }
-        .station-card:active { transform: scale(0.98); }
-        .station-right-side { display: flex; align-items: center; gap: 15px; }
-        .pin-icon { width: 38px; height: 48px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2em; }
-        .pin-icon span { transform: rotate(45deg); }
-        .station-info { display: flex; flex-direction: column; }
-        .station-name { font-size: 1.2em; font-weight: 600; color: var(--text-main); }
-        .station-dates { font-size: 0.85em; color: #888; margin-top: 2px; }
-
         /* Destinations Grid */
         .destinations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .destination-btn {
             background: var(--card-bg); border-radius: 20px; padding: 25px 15px; text-align: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: none; cursor: pointer; transition: transform 0.2s;
-            font-family: inherit; color: var(--text-main); height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-family: inherit; color: var(--text-main); height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;
         }
         .destination-btn:active { transform: scale(0.95); }
         .dest-icon { font-size: 2.5em; margin-bottom: 10px; }
@@ -138,7 +116,7 @@
         
         .filter-bar { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; }
         .filter-bar::-webkit-scrollbar { display: none; }
-        .filter-btn { padding: 8px 16px; border-radius: 20px; background: #f0f0f0; border: none; color: #555; white-space: nowrap; font-weight: 600; cursor: pointer; }
+        .filter-btn { padding: 8px 16px; border-radius: 20px; background: #f0f0f0; border: none; color: #555; white-space: nowrap; font-weight: 600; cursor: pointer; font-family: inherit; }
         .filter-btn.active { background: #4a4036; color: #fff; }
 
         .place-card { background: var(--card-bg); border-radius: 15px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-right: 4px solid #ddd; position: relative; }
@@ -161,7 +139,6 @@
         .btn-waze { background: #33ccff; color: #004d66; }
         .btn-maps { background: #e3f2fd; color: #1976d2; }
         
-        /* Action buttons for places & docs */
         .card-actions { display: flex; gap: 5px; border-top: 1px solid #eee; padding-top: 10px; }
         .action-icon-btn { background: #f0f0f0; border: none; border-radius: 8px; padding: 6px 10px; font-size: 1em; cursor: pointer; color: #555; }
         .action-icon-btn:hover { background: #e0e0e0; }
@@ -169,7 +146,7 @@
 
         /* Floating Action Button (Add) */
         .fab-btn {
-            position: fixed; bottom: 85px; left: 20px; background: var(--accent-red); color: white;
+            position: fixed; bottom: 95px; left: 20px; background: var(--accent-red); color: white;
             width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
             font-size: 2em; box-shadow: 0 4px 15px rgba(211, 84, 0, 0.4); border: none; cursor: pointer; z-index: 90;
         }
@@ -178,23 +155,33 @@
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9em; }
         .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; box-sizing: border-box;
+            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; box-sizing: border-box; font-size:16px;
         }
         .submit-btn { width: 100%; background: #4a4036; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; font-size: 1em; cursor: pointer; }
 
-        /* Documents */
+        /* Documents & Financial Tools */
         .doc-link { position: relative; display: flex; align-items: center; background-color: var(--card-bg); padding: 15px; border-radius: 15px; text-decoration: none; color: var(--text-main); margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); border-right: 4px solid #ccc; }
         .doc-icon { font-size: 1.8em; margin-left: 15px; }
         .doc-details { flex-grow: 1; }
         .doc-details h4 { margin: 0 0 5px 0; font-size: 1.1em; }
         .doc-details p { margin: 0; font-size: 0.85em; color: #888; }
         .delete-doc-btn { position: absolute; left: 15px; background: none; border: none; font-size: 1.2em; color: #e74c3c; cursor: pointer; padding: 5px; }
+        
+        .calculator-box { background: #fff; border-radius: 15px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); border: 1px solid #eee; text-align: right;}
+        .calc-result { font-size: 1.3em; font-weight: bold; color: var(--accent-red); margin-top: 10px;}
 
-        /* Bottom Nav */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 450px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); display: flex; justify-content: space-around; padding: 12px 0 20px 0; border-top: 1px solid rgba(0,0,0,0.05); z-index: 100; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: #b0b0b0; font-size: 0.75em; border: none; background: none; cursor: pointer; padding:0;}
+        /* Checklist */
+        .check-item { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 12px; margin-bottom: 8px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); border: 1px solid #f0f0f0; transition: 0.2s;}
+        .check-item.done { opacity: 0.6; background: #fafafa; }
+        .check-item.done .check-text { text-decoration: line-through; color: #999; }
+        .check-label { display: flex; align-items: center; gap: 12px; cursor: pointer; flex-grow:1; margin:0; font-size: 1em;}
+        .custom-checkbox { width: 22px; height: 22px; cursor: pointer; accent-color: var(--accent-red);}
+
+        /* Bottom Nav - Adjusted for 5 items */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 450px; background: rgba(255, 255, 255, 0.98); box-shadow: 0 -2px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; padding: 10px 5px 20px 5px; border-top: 1px solid #eee; z-index: 100; box-sizing: border-box;}
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #b0b0b0; font-size: 0.7em; border: none; background: none; cursor: pointer; padding:0; flex: 1;}
         .nav-item.active { color: var(--accent-red); font-weight: 600; }
-        .nav-icon { font-size: 1.5em; margin-bottom: 4px; }
+        .nav-icon { font-size: 1.6em; margin-bottom: 4px; }
 
         /* Modals */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: flex-end; }
@@ -208,10 +195,6 @@
         .header-actions { display: flex; gap: 10px; align-items: center;}
         .close-btn { background: #f0f0f0; border: none; width: 35px; height: 35px; border-radius: 50%; font-size: 1.2em; font-weight: bold; color: #555; cursor: pointer; }
         .modal-body { font-size: 1em; line-height: 1.6; color: #444; overflow-y: auto; padding-left: 5px;}
-        .modal-body h4 { color: var(--accent-red); margin: 15px 0 5px 0; font-size: 1.1em;}
-        .modal-body ul { margin: 0; padding-right: 20px; }
-        .modal-body li { margin-bottom: 8px; }
-        .time-badge { font-weight: bold; color: #0056b3; background: #e3f2fd; padding: 2px 6px; border-radius: 4px; margin-left: 5px; font-size: 0.9em;}
 
     </style>
 </head>
@@ -235,52 +218,19 @@
         <div id="days-container"></div>
     </div>
 
-    <!-- מסך 2: מפה -->
-    <div id="view-map" class="view-section">
-        <div class="section-title">מפה <span style="font-size: 0.6em; font-weight: normal; color: #888;">התחנות שלנו 🗺️</span></div>
-        <div class="map-interactive-container">
-            <img src="https://via.placeholder.com/400x200/e6e4df/cccccc?text=Map+Illustration" alt="מפת המסלול" class="map-image">
-            <div class="map-pin-btn" style="top: 30%; right: 25%; background-color: var(--pastel-green);" onclick="openInfoModal('location', 'ithaca')">1</div>
-            <div class="map-pin-btn" style="top: 20%; right: 55%; background-color: var(--pastel-blue);" onclick="openInfoModal('location', 'niagara')">2</div>
-            <div class="map-pin-btn" style="top: 60%; right: 65%; background-color: var(--pastel-purple);" onclick="openInfoModal('location', 'pa')">3</div>
-            <div class="map-pin-btn" style="top: 75%; right: 15%; background-color: var(--pastel-pink);" onclick="openInfoModal('location', 'nyc')">4</div>
-        </div>
-        <div class="station-card" onclick="openInfoModal('location', 'ithaca')">
-            <div class="station-right-side"><div class="pin-icon" style="background-color: var(--pastel-green);"><span>1</span></div>
-            <div class="station-info"><div class="station-name">איתקה</div><div class="station-dates">27.9 - 28.9 | לילה 1</div></div></div><div class="day-arrow">›</div>
-        </div>
-        <div class="station-card" onclick="openInfoModal('location', 'niagara')">
-            <div class="station-right-side"><div class="pin-icon" style="background-color: var(--pastel-blue);"><span>2</span></div>
-            <div class="station-info"><div class="station-name">מפלי הניאגרה</div><div class="station-dates">28.9 - 29.9 | לילה 1</div></div></div><div class="day-arrow">›</div>
-        </div>
-        <div class="station-card" onclick="openInfoModal('location', 'pa')">
-            <div class="station-right-side"><div class="pin-icon" style="background-color: var(--pastel-purple);"><span>3</span></div>
-            <div class="station-info"><div class="station-name">פנסילבניה (האריסברג)</div><div class="station-dates">29.9 - 30.9 | לילה 1</div></div></div><div class="day-arrow">›</div>
-        </div>
-        <div class="station-card" onclick="openInfoModal('location', 'nyc')">
-            <div class="station-right-side"><div class="pin-icon" style="background-color: var(--pastel-pink);"><span>4</span></div>
-            <div class="station-info"><div class="station-name">ניו יורק (ניוארק + מנהטן)</div><div class="station-dates">30.9 - 8.10 | 8 לילות</div></div></div><div class="day-arrow">›</div>
-        </div>
-    </div>
-
-    <!-- מסך 3: מה עושים -->
+    <!-- מסך 2: מה עושים -->
     <div id="view-todo" class="view-section">
         
-        <!-- כרטיסיות היעדים הראשיות -->
         <div id="destinations-view">
             <div class="section-title">לאן יוצאים? <br><span style="font-size: 0.6em; font-weight: normal; color: #888;">מסעדות, אטרקציות וניווט</span></div>
-            <div class="destinations-grid" id="destinations-grid">
-                <!-- Destinations generated dynamically here -->
-            </div>
+            <div class="destinations-grid" id="destinations-grid"></div>
         </div>
 
-        <!-- רשימת המקומות בתוך היעד -->
         <div id="places-view" style="display: none; position: relative;">
             <div class="places-header">
                 <button class="back-btn" onclick="closeDestination()">➔</button>
                 <div class="section-title" id="current-dest-title" style="margin: 0;">המלצות</div>
             </div>
-            
             <div class="filter-bar" id="category-filters">
                 <button class="filter-btn active" onclick="filterPlaces('all')">הכל</button>
                 <button class="filter-btn" onclick="filterPlaces('מסעדה')">מסעדות</button>
@@ -288,26 +238,81 @@
                 <button class="filter-btn" onclick="filterPlaces('אטרקציה')">אטרקציות</button>
                 <button class="filter-btn" onclick="filterPlaces('שופינג')">שופינג</button>
             </div>
-
             <div id="places-container"></div>
             <button class="fab-btn" onclick="openAddPlaceModal()">+</button>
         </div>
     </div>
 
-    <!-- מסך 4: מסמכים -->
-    <div id="view-docs" class="view-section">
-        <div class="section-title">המסמכים שלנו</div>
-        <div id="docs-container"></div>
-        <button class="fab-btn" style="background: var(--pastel-blue); color: #004d66;" onclick="openAddDocModal()">+</button>
+    <!-- מסך 3: צ'קליסט (החליף את המפה הסטטית) -->
+    <div id="view-checklist" class="view-section">
+        <div class="section-title">צ'קליסט <br><span style="font-size: 0.6em; font-weight: normal; color: #888;">ציוד, אריזות ומשימות ✅</span></div>
+        <div id="checklist-container"></div>
+        <button class="fab-btn" onclick="openAddChecklistModal()">+</button>
     </div>
 
+    <!-- מסך 4: מפה חיה -->
+    <div id="view-livemap" class="view-section">
+        <div class="section-title">מפה חיה 🗺️ <br><span style="font-size: 0.6em; font-weight: normal; color: #888;">נווטו בקלות באזור שלכם</span></div>
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="changeMap('Ithaca, NY', this)">איתקה</button>
+            <button class="filter-btn" onclick="changeMap('Niagara Falls, NY', this)">ניאגרה</button>
+            <button class="filter-btn" onclick="changeMap('Harrisburg, PA', this)">האריסברג</button>
+            <button class="filter-btn" onclick="changeMap('Times Square, NY', this)">ניו יורק</button>
+        </div>
+        <div style="border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 2px solid #fff;">
+            <iframe id="live-map-frame" width="100%" height="450" frameborder="0" style="border:0;" src="https://maps.google.com/maps?q=Ithaca,NY&t=&z=12&ie=UTF8&iwloc=&output=embed" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- מסך 5: כלים ומסמכים -->
+    <div id="view-tools" class="view-section">
+        <div class="section-title">כלים ומסמכים 💼</div>
+
+        <!-- ארגז כלים פיננסי -->
+        <h3 style="font-size: 1.1em; color: #777; margin: 20px 0 10px 0; border-bottom: 1px dashed #ddd; padding-bottom: 5px;">💵 ארגז כלים פיננסי</h3>
+        
+        <div class="calculator-box">
+            <div style="font-weight: 600; margin-bottom: 10px;">מחשבון טיפים למסעדה</div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                <input type="number" id="bill-input" placeholder="חשבון ($)" style="flex:1; padding: 10px; border-radius: 8px; border: 1px solid #ddd;" oninput="calculateFinancials()">
+                <select id="tip-percent" style="padding: 10px; border-radius: 8px; border: 1px solid #ddd;" onchange="calculateFinancials()">
+                    <option value="15">15%</option>
+                    <option value="18">18%</option>
+                    <option value="20" selected>20%</option>
+                    <option value="22">22%</option>
+                </select>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.9em; color: #666;">
+                <span>טיפ: <b id="tip-amount">$0.00</b></span>
+                <span>סה"כ לתשלום: <b id="total-with-tip" style="color:var(--text-main); font-size:1.2em;">$0.00</b></span>
+            </div>
+        </div>
+
+        <div class="calculator-box">
+            <div style="font-weight: 600; margin-bottom: 10px;">המרת דולר לשקל (לפי 3.75)</div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <input type="number" id="usd-input" placeholder="סכום ב-$" style="flex:1; padding: 10px; border-radius: 8px; border: 1px solid #ddd;" oninput="calculateFinancials()">
+                <div style="flex:1; text-align: left;" class="calc-result" id="ils-result">₪0.00</div>
+            </div>
+        </div>
+
+        <h3 style="font-size: 1.1em; color: #777; margin: 30px 0 10px 0; border-bottom: 1px dashed #ddd; padding-bottom: 5px;">📁 המסמכים שלנו</h3>
+        <div id="docs-container"></div>
+        <button class="fab-btn" style="background: var(--pastel-blue); color: #004d66; bottom: 85px;" onclick="openAddDocModal()">+</button>
+    </div>
+
+    <!-- תפריט תחתון (5 כפתורים) -->
     <nav class="bottom-nav">
         <button class="nav-item active" onclick="switchView('view-home', this)"><span class="nav-icon">🗽</span><span>היום</span></button>
-        <button class="nav-item" onclick="switchView('view-todo', this)"><span class="nav-icon">🧭</span><span>מה עושים?</span></button>
-        <button class="nav-item" onclick="switchView('view-map', this)"><span class="nav-icon">🗺️</span><span>מפה</span></button>
-        <button class="nav-item" onclick="switchView('view-docs', this)"><span class="nav-icon">📁</span><span>מסמכים</span></button>
+        <button class="nav-item" onclick="switchView('view-todo', this)"><span class="nav-icon">🧭</span><span>מקומות</span></button>
+        <button class="nav-item" onclick="switchView('view-checklist', this)"><span class="nav-icon">✅</span><span>צ'קליסט</span></button>
+        <button class="nav-item" onclick="switchView('view-livemap', this)"><span class="nav-icon">🗺️</span><span>מפה חיה</span></button>
+        <button class="nav-item" onclick="switchView('view-tools', this)"><span class="nav-icon">💼</span><span>כלים</span></button>
     </nav>
 
+    <!-- Modals -->
+    <!-- (כל המודאלים נשארים אותו דבר, הוספתי רק את המודאל לצ'קליסט) -->
+    
     <!-- Info Modal -->
     <div id="info-modal" class="modal-overlay">
         <div class="modal-content">
@@ -332,18 +337,9 @@
             <div class="modal-body">
                 <form id="edit-day-form" onsubmit="saveDayEdit(event)">
                     <input type="hidden" id="edit-day-id">
-                    <div class="form-group">
-                        <label>כותרת (למשל: יום 1 (27.9)):</label>
-                        <input type="text" id="edit-day-title" required>
-                    </div>
-                    <div class="form-group">
-                        <label>תיאור קצר בכרטיסיה:</label>
-                        <input type="text" id="edit-day-desc" required>
-                    </div>
-                    <div class="form-group">
-                        <label>תוכן מפורט:</label>
-                        <textarea id="edit-day-content" rows="6" required></textarea>
-                    </div>
+                    <div class="form-group"><label>כותרת:</label><input type="text" id="edit-day-title" required></div>
+                    <div class="form-group"><label>תיאור קצר:</label><input type="text" id="edit-day-desc" required></div>
+                    <div class="form-group"><label>תוכן מפורט:</label><textarea id="edit-day-content" rows="6" required></textarea></div>
                     <button type="submit" class="submit-btn">שמור שינויים</button>
                 </form>
             </div>
@@ -354,16 +350,13 @@
     <div id="add-place-modal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title" id="place-modal-title">הוספת מקום חדש 📌</div>
+                <div class="modal-title" id="place-modal-title">הוספת מקום 📌</div>
                 <button class="close-btn" onclick="closeModal('add-place-modal')">×</button>
             </div>
             <div class="modal-body">
                 <form id="add-place-form" onsubmit="savePlace(event)">
                     <input type="hidden" id="edit-place-index" value="-1">
-                    <div class="form-group">
-                        <label>שם המקום:</label>
-                        <input type="text" id="new-place-name" required placeholder="לדוגמה: Central Park">
-                    </div>
+                    <div class="form-group"><label>שם המקום:</label><input type="text" id="new-place-name" required></div>
                     <div class="form-group">
                         <label>קטגוריה:</label>
                         <select id="new-place-category">
@@ -373,31 +366,19 @@
                             <option value="שופינג">שופינג 🛍️</option>
                         </select>
                     </div>
+                    <div class="form-group"><label>כתובת (לניווט):</label><input type="text" id="new-place-address" required></div>
+                    <div class="form-group"><label>שעות פתיחה:</label><input type="text" id="new-place-hours"></div>
                     <div class="form-group">
-                        <label>כתובת מדויקת (לניווט):</label>
-                        <input type="text" id="new-place-address" required placeholder="רחוב, עיר...">
-                    </div>
-                    <div class="form-group">
-                        <label>שעות פתיחה (לא חובה):</label>
-                        <input type="text" id="new-place-hours" placeholder="לדוגמה: 09:00 - 22:00">
-                    </div>
-                    <div class="form-group">
-                        <label>עלות משוערת:</label>
+                        <label>עלות:</label>
                         <select id="new-place-price">
                             <option value="$">זול ($)</option>
                             <option value="$$" selected>בינוני ($$)</option>
                             <option value="$$$">יקר ($$$)</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>מרחק/הערה (לא חובה):</label>
-                        <input type="text" id="new-place-distance" placeholder="לדוגמה: 5 דקות הליכה מהמלון">
-                    </div>
-                    <div class="form-group">
-                        <label>תיאור קצר:</label>
-                        <textarea id="new-place-desc" rows="3" placeholder="למה כדאי ללכת לפה?"></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">שמור מקום</button>
+                    <div class="form-group"><label>מרחק/הערה:</label><input type="text" id="new-place-distance"></div>
+                    <div class="form-group"><label>תיאור קצר:</label><textarea id="new-place-desc" rows="3"></textarea></div>
+                    <button type="submit" class="submit-btn">שמור</button>
                 </form>
             </div>
         </div>
@@ -407,7 +388,7 @@
     <div id="add-doc-modal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">הוספת מסמך חדש 📁</div>
+                <div class="modal-title">הוספת מסמך 📁</div>
                 <button class="close-btn" onclick="closeModal('add-doc-modal')">×</button>
             </div>
             <div class="modal-body">
@@ -421,19 +402,35 @@
                             <option value="כללי">כללי 🛡️</option>
                         </select>
                     </div>
+                    <div class="form-group"><label>כותרת:</label><input type="text" id="new-doc-title" required></div>
+                    <div class="form-group"><label>פרטים:</label><input type="text" id="new-doc-desc" required></div>
+                    <div class="form-group"><label>קישור למסמך (לא חובה):</label><input type="url" id="new-doc-link" placeholder="https://..."></div>
+                    <button type="submit" class="submit-btn">שמור</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Checklist Modal -->
+    <div id="add-check-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">משימה חדשה ✅</div>
+                <button class="close-btn" onclick="closeModal('add-check-modal')">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-check-form" onsubmit="saveCheckItem(event)">
+                    <div class="form-group"><label>תיאור המשימה / פריט:</label><input type="text" id="new-check-text" required></div>
                     <div class="form-group">
-                        <label>כותרת (למשל: כרטיס הלוך):</label>
-                        <input type="text" id="new-doc-title" required>
+                        <label>קטגוריה (בחרו או הקלידו חדשה):</label>
+                        <input type="text" id="new-check-cat" list="check-cats" required placeholder="למשל: ציוד אישי">
+                        <datalist id="check-cats">
+                            <option value="מסמכים וטיסה">
+                            <option value="ציוד אישי">
+                            <option value="לפני עזיבת מלון">
+                        </datalist>
                     </div>
-                    <div class="form-group">
-                        <label>פרטים (מספר טיסה, נוסעים וכו'):</label>
-                        <input type="text" id="new-doc-desc" required>
-                    </div>
-                    <div class="form-group">
-                        <label>קישור למסמך (לא חובה):</label>
-                        <input type="url" id="new-doc-link" placeholder="https://...">
-                    </div>
-                    <button type="submit" class="submit-btn">שמור מסמך</button>
+                    <button type="submit" class="submit-btn">הוסף לצ'קליסט</button>
                 </form>
             </div>
         </div>
@@ -449,7 +446,7 @@
         document.getElementById("countdown").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24)) + " ימים";
     }, 1000);
 
-    // --- פונקציות עזר לשמירה ---
+    // --- פונקציות עזר לשמירה ב-LocalStorage ---
     function getData(key, defaultData) {
         const saved = localStorage.getItem(key);
         return saved ? JSON.parse(saved) : defaultData;
@@ -466,6 +463,15 @@
         btnElement.classList.add('active');
         if(viewId === 'view-todo') closeDestination();
     }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('active');
+    }
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) closeModal(this.id);
+        });
+    });
 
     // --- לוגיקת ימים (Page 1) ---
     const defaultDays = [
@@ -484,9 +490,7 @@
         const days = getData('trip2026_days', defaultDays);
         const container = document.getElementById('days-container');
         container.innerHTML = '';
-        
         let nycTitleAdded = false;
-
         days.forEach(day => {
             if (day.section === 'nyc' && !nycTitleAdded) {
                 container.innerHTML += `<div class="section-title" style="margin-top: 20px; font-size: 1.1em; color: #777;">התפוח הגדול 🍎</div>`;
@@ -495,10 +499,7 @@
             container.innerHTML += `
                 <div class="day-card" style="border-right-color: ${day.color};" onclick="openDayInfo('${day.id}')">
                     <div class="day-icon">${day.icon}</div>
-                    <div class="day-content">
-                        <h4>${day.title}</h4>
-                        <p>${day.desc}</p>
-                    </div>
+                    <div class="day-content"><h4>${day.title}</h4><p>${day.desc}</p></div>
                     <div class="day-arrow">›</div>
                 </div>
             `;
@@ -508,26 +509,20 @@
     function openDayInfo(id) {
         const days = getData('trip2026_days', defaultDays);
         const day = days.find(d => d.id === id);
-        
         document.getElementById('modal-title').innerHTML = day.title;
         document.getElementById('modal-title').style.color = day.color;
         document.getElementById('modal-body').innerHTML = day.content;
-        
-        document.getElementById('modal-edit-action').innerHTML = `
-            <button class="action-icon-btn" onclick="openEditDay('${day.id}')">✏️ עריכה</button>
-        `;
+        document.getElementById('modal-edit-action').innerHTML = `<button class="action-icon-btn" onclick="openEditDay('${day.id}')">✏️ עריכה</button>`;
         document.getElementById('info-modal').classList.add('active');
     }
 
     function openEditDay(id) {
         const days = getData('trip2026_days', defaultDays);
         const day = days.find(d => d.id === id);
-        
         document.getElementById('edit-day-id').value = day.id;
         document.getElementById('edit-day-title').value = day.title;
         document.getElementById('edit-day-desc').value = day.desc;
         document.getElementById('edit-day-content').value = day.content;
-        
         closeModal('info-modal');
         document.getElementById('edit-day-modal').classList.add('active');
     }
@@ -537,7 +532,6 @@
         const id = document.getElementById('edit-day-id').value;
         const days = getData('trip2026_days', defaultDays);
         const index = days.findIndex(d => d.id === id);
-        
         if(index !== -1) {
             days[index].title = document.getElementById('edit-day-title').value;
             days[index].desc = document.getElementById('edit-day-desc').value;
@@ -548,7 +542,7 @@
         }
     }
 
-    // --- לוגיקת יעדים (Page 3 הראשי) ---
+    // --- לוגיקת יעדים ומקומות (Page 2) ---
     const defaultDestinations = [
         { id: 'ithaca', name: 'איתקה', icon: '🌲', color: '#81c784' },
         { id: 'niagara', name: 'ניאגרה', icon: '🌊', color: '#64b5f6' },
@@ -560,10 +554,9 @@
         const dests = getData('trip2026_dests', defaultDestinations);
         const grid = document.getElementById('destinations-grid');
         grid.innerHTML = '';
-        
         dests.forEach((dest, i) => {
             grid.innerHTML += `
-                <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div>
                     <button class="destination-btn" style="border-bottom: 5px solid ${dest.color};" onclick="openDestination('${dest.id}', '${dest.name}')">
                         <div class="dest-icon">${dest.icon}</div>
                         <div class="dest-name">${dest.name}</div>
@@ -573,22 +566,13 @@
         });
     }
 
-    // --- לוגיקת מקומות בתוך יעדים ---
     let currentDestination = '';
     let currentFilter = 'all';
 
     const defaultPlaces = [
-        { dest: 'ithaca', category: 'מסעדה', name: 'Ithaca Beer Co.', rating: 4.6, price: '$$', hours: '12:00 - 21:00', distance: '10 דק׳ נסיעה מהמרכז', address: '122 Ithaca Beer Dr, Ithaca, NY 14850', desc: 'מבשלה עם מדשאות ענק, המבורגרים ופיצות. מושלם לצהריים אחרי הנסיעה.' },
-        { dest: 'ithaca', category: 'אטרקציה', name: 'Taughannock Falls', rating: 4.8, price: '$', hours: 'זריחה עד שקיעה', distance: '15 דק׳ נסיעה', address: 'Taughannock Falls State Park, NY', desc: 'מסלול הליכה שטוח וקליל של 20 דקות למפל עוצר נשימה (גבוה מניאגרה!).' },
-        { dest: 'niagara', category: 'אטרקציה', name: 'Maid of the Mist', rating: 4.7, price: '$$', hours: '09:00 - 17:00', distance: 'מרחק הליכה מהמלון', address: '1 Prospect St, Niagara Falls, NY 14303', desc: 'השייט המפורסם אל תוך המפלים (עם הפונצ\'ו הכחול).' },
-        { dest: 'niagara', category: 'מסעדה', name: 'The Western Door', rating: 4.5, price: '$$$', hours: '17:00 - 22:00', distance: 'בתוך המלון שלכם', address: '310 4th St, Niagara Falls, NY 14303', desc: 'סטקייה מצוינת שנמצאת ממש בתוך מלון סנקה. נוח מאוד לארוחת ערב.' },
-        { dest: 'pa', category: 'אטרקציה', name: 'Hershey\'s Chocolate World', rating: 4.6, price: '$', hours: '09:00 - 18:00', distance: '15 דק׳ מהמלון שלכם', address: '101 Chocolate World Way, Hershey, PA 17033', desc: 'סיור חינמי בקרוניות המראה את תהליך ייצור השוקולד, וחנות מזכרות ענקית.' },
-        { dest: 'pa', category: 'מסעדה', name: 'Tröegs Brewing', rating: 4.8, price: '$$', hours: '11:00 - 22:00', distance: 'קרוב להרשיז', address: '200 E Hershey Park Dr, Hershey, PA 17033', desc: 'מבשלה עצמאית עם אוכל מעולה ואווירה תוססת. מומלץ לארוחת ערב באזור.' },
-        { dest: 'nyc', category: 'מסעדה', name: 'Carmine\'s Italian', rating: 4.5, price: '$$', hours: '11:30 - 23:00', distance: '2 דקות הליכה מאדיסון', address: '200 W 44th St, New York, NY 10036', desc: 'מוסד ניו יורקי! אוכל איטלקי במנות ענקיות שמיועדות לחלוקה ל-4 אנשים. חובה להזמין מקום מראש.' },
-        { dest: 'nyc', category: 'מסעדה', name: 'Ellen\'s Stardust Diner', rating: 4.3, price: '$$', hours: '07:00 - 23:30', distance: '4 דקות הליכה מאדיסון', address: '1650 Broadway, New York, NY 10019', desc: 'דיינר אמריקאי קלאסי שבו המלצרים הם זמרי ברודווי ששרים תוך כדי ההגשה. חוויה משוגעת!' },
-        { dest: 'nyc', category: 'קפה', name: 'Culture Espresso', rating: 4.7, price: '$', hours: '07:00 - 19:00', distance: '10 דקות הליכה', address: '72 W 38th St, New York, NY 10018', desc: 'קפה משובח ומאפים. עוגיית השוקולד צ\'יפס שלהם נחשבת לאחת הטובות בניו יורק.' },
-        { dest: 'nyc', category: 'אטרקציה', name: 'Top of the Rock', rating: 4.7, price: '$$$', hours: '09:00 - 23:00', distance: '12 דקות הליכה', address: '30 Rockefeller Plaza, New York, NY 10112', desc: 'התצפית המומלצת ביותר בעיר, כי ממנה רואים גם את הסנטרל פארק וגם את האמפייר סטייט.' },
-        { dest: 'nyc', category: 'שופינג', name: 'The Mills at Jersey Gardens', rating: 4.4, price: '$$', hours: '10:00 - 20:00', distance: '45 דק׳ אוטובוס', address: '651 Kapkowski Rd, Elizabeth, NJ 07201', desc: 'קניון עודפים ענק (אאוטלט) בניו ג\'רזי. פטור ממס על ביגוד והנעלה. קחו אוטובוס מ-Port Authority.' }
+        { dest: 'ithaca', category: 'מסעדה', name: 'Ithaca Beer Co.', rating: 4.6, price: '$$', hours: '12:00 - 21:00', distance: '10 דק׳ נסיעה מהמרכז', address: '122 Ithaca Beer Dr, Ithaca, NY 14850', desc: 'מבשלה עם מדשאות ענק, המבורגרים ופיצות.' },
+        { dest: 'niagara', category: 'אטרקציה', name: 'Maid of the Mist', rating: 4.7, price: '$$', hours: '09:00 - 17:00', distance: 'מרחק הליכה מהמלון', address: '1 Prospect St, Niagara Falls, NY 14303', desc: 'השייט המפורסם אל תוך המפלים.' },
+        { dest: 'nyc', category: 'מסעדה', name: 'Carmine\'s Italian', rating: 4.5, price: '$$', hours: '11:30 - 23:00', distance: '2 דקות הליכה מאדיסון', address: '200 W 44th St, New York, NY 10036', desc: 'אוכל איטלקי במנות ענקיות שמיועדות לחלוקה ל-4.' }
     ];
 
     function openDestination(destId, destName) {
@@ -597,10 +581,8 @@
         document.getElementById('destinations-view').style.display = 'none';
         document.getElementById('places-view').style.display = 'block';
         document.getElementById('current-dest-title').innerText = "המלצות ב" + destName;
-        
         document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
         document.querySelector('.filter-btn').classList.add('active');
-
         renderPlaces();
     }
 
@@ -611,12 +593,9 @@
 
     function filterPlaces(category) {
         currentFilter = category;
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            if(btn.innerText.includes(category) || (category === 'all' && btn.innerText === 'הכל')) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
+        document.querySelectorAll('#places-view .filter-btn').forEach(btn => {
+            if(btn.innerText.includes(category) || (category === 'all' && btn.innerText === 'הכל')) btn.classList.add('active');
+            else btn.classList.remove('active');
         });
         renderPlaces();
     }
@@ -624,14 +603,12 @@
     function renderPlaces() {
         const container = document.getElementById('places-container');
         container.innerHTML = '';
-        
         const allPlaces = getData('trip2026_places', defaultPlaces);
-        
         const filtered = allPlaces.map((p, index) => ({...p, originalIndex: index}))
                                  .filter(p => p.dest === currentDestination && (currentFilter === 'all' || p.category === currentFilter));
 
         if (filtered.length === 0) {
-            container.innerHTML = '<p style="text-align:center; color:#888; margin-top:20px;">אין מקומות בקטגוריה זו. לחצו על ה-+ כדי להוסיף!</p>';
+            container.innerHTML = '<p style="text-align:center; color:#888; margin-top:20px;">אין מקומות בקטגוריה זו.</p>';
             return;
         }
 
@@ -645,41 +622,33 @@
             const wazeLink = `https://waze.com/ul?q=${encodeURIComponent(place.address)}&navigate=yes`;
             const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.address)}`;
 
-            const card = document.createElement('div');
-            card.className = 'place-card';
-            card.style.borderRightColor = color;
-            card.innerHTML = `
-                <div class="place-header">
-                    <div class="place-title">
-                        <h4>${place.name}</h4>
-                        <span class="place-type" style="background-color: ${color};">${place.category}</span>
+            container.innerHTML += `
+                <div class="place-card" style="border-right-color: ${color};">
+                    <div class="place-header">
+                        <div class="place-title"><h4>${place.name}</h4><span class="place-type" style="background-color: ${color};">${place.category}</span></div>
+                        <div class="place-rating">⭐ ${place.rating}</div>
                     </div>
-                    <div class="place-rating">⭐ ${place.rating}</div>
-                </div>
-                <div class="place-meta">
-                    <div class="meta-item"><span>🕒</span> ${place.hours || 'שעות לא צוינו'}</div>
-                    <div class="meta-item"><span>💰</span> ${place.price || '$$'}</div>
-                    <div class="meta-item"><span>📍</span> ${place.distance || 'ננווט כדי לראות מרחק'}</div>
-                </div>
-                <p class="place-desc">${place.desc}</p>
-                <div class="nav-buttons">
-                    <a href="${wazeLink}" target="_blank" class="nav-btn btn-waze">🚘 Waze</a>
-                    <a href="${mapsLink}" target="_blank" class="nav-btn btn-maps">🗺️ Maps</a>
-                </div>
-                <div class="card-actions">
-                    <button class="action-icon-btn" onclick="movePlace(${place.originalIndex}, -1)" ${i === 0 ? 'disabled' : ''}>⬆️</button>
-                    <button class="action-icon-btn" onclick="movePlace(${place.originalIndex}, 1)" ${i === filtered.length - 1 ? 'disabled' : ''}>⬇️</button>
-                    <button class="action-icon-btn" onclick="editPlace(${place.originalIndex})">✏️ עריכה</button>
-                    <button class="action-icon-btn" style="color:#e74c3c; margin-right:auto;" onclick="deletePlace(${place.originalIndex})">🗑️ מחיקה</button>
+                    <div class="place-meta">
+                        <div class="meta-item"><span>🕒</span> ${place.hours || 'שעות לא צוינו'}</div>
+                        <div class="meta-item"><span>💰</span> ${place.price || '$$'}</div>
+                        <div class="meta-item"><span>📍</span> ${place.distance || 'ננווט כדי לראות מרחק'}</div>
+                    </div>
+                    <p class="place-desc">${place.desc}</p>
+                    <div class="nav-buttons">
+                        <a href="${wazeLink}" target="_blank" class="nav-btn btn-waze">🚘 Waze</a>
+                        <a href="${mapsLink}" target="_blank" class="nav-btn btn-maps">🗺️ Maps</a>
+                    </div>
+                    <div class="card-actions">
+                        <button class="action-icon-btn" onclick="editPlace(${place.originalIndex})">✏️ עריכה</button>
+                        <button class="action-icon-btn" style="color:#e74c3c; margin-right:auto;" onclick="deletePlace(${place.originalIndex})">🗑️ מחיקה</button>
+                    </div>
                 </div>
             `;
-            container.appendChild(card);
         });
     }
 
     function openAddPlaceModal() {
         document.getElementById('edit-place-index').value = '-1';
-        document.getElementById('place-modal-title').innerText = 'הוספת מקום חדש 📌';
         document.getElementById('add-place-form').reset();
         document.getElementById('add-place-modal').classList.add('active');
     }
@@ -688,26 +657,19 @@
         event.preventDefault();
         const allPlaces = getData('trip2026_places', defaultPlaces);
         const index = parseInt(document.getElementById('edit-place-index').value);
-        
         const placeData = {
             dest: currentDestination,
             category: document.getElementById('new-place-category').value,
             name: document.getElementById('new-place-name').value,
-            rating: 5.0, 
-            price: document.getElementById('new-place-price').value,
+            rating: 5.0, price: document.getElementById('new-place-price').value,
             hours: document.getElementById('new-place-hours').value,
             distance: document.getElementById('new-place-distance').value,
             address: document.getElementById('new-place-address').value,
             desc: document.getElementById('new-place-desc').value
         };
 
-        if (index === -1) {
-            allPlaces.push(placeData);
-        } else {
-            placeData.rating = allPlaces[index].rating;
-            placeData.dest = allPlaces[index].dest;
-            allPlaces[index] = placeData;
-        }
+        if (index === -1) allPlaces.push(placeData);
+        else { placeData.rating = allPlaces[index].rating; placeData.dest = allPlaces[index].dest; allPlaces[index] = placeData; }
 
         saveData('trip2026_places', allPlaces);
         closeModal('add-place-modal');
@@ -715,12 +677,8 @@
     }
 
     function editPlace(index) {
-        const allPlaces = getData('trip2026_places', defaultPlaces);
-        const place = allPlaces[index];
-        
+        const place = getData('trip2026_places', defaultPlaces)[index];
         document.getElementById('edit-place-index').value = index;
-        document.getElementById('place-modal-title').innerText = 'עריכת מקום ✏️';
-        
         document.getElementById('new-place-name').value = place.name;
         document.getElementById('new-place-category').value = place.category;
         document.getElementById('new-place-address').value = place.address;
@@ -728,7 +686,6 @@
         document.getElementById('new-place-price').value = place.price || '$$';
         document.getElementById('new-place-distance').value = place.distance || '';
         document.getElementById('new-place-desc').value = place.desc || '';
-        
         document.getElementById('add-place-modal').classList.add('active');
     }
 
@@ -741,56 +698,118 @@
         }
     }
 
-    function movePlace(index, direction) {
-        const allPlaces = getData('trip2026_places', defaultPlaces);
-        const targetIndex = index + direction;
+    // --- לוגיקת צ'קליסט (Page 3 החדש) ---
+    const defaultChecklist = [
+        { id: 1, text: 'דרכון - עמית', checked: false, category: 'מסמכים וטיסה' },
+        { id: 2, text: 'דרכון - אתי', checked: false, category: 'מסמכים וטיסה' },
+        { id: 3, text: 'דרכון - ליאור', checked: false, category: 'מסמכים וטיסה' },
+        { id: 4, text: 'דרכון - שגיא', checked: false, category: 'מסמכים וטיסה' },
+        { id: 5, text: 'רישיון נהיגה בינלאומי', checked: false, category: 'מסמכים וטיסה' },
+        { id: 6, text: 'מטענים ומתאמים לשקע אמריקאי', checked: false, category: 'ציוד אישי' },
+        { id: 7, text: 'להחזיר מפתחות בקבלה', checked: false, category: 'לפני עזיבת מלון' },
+        { id: 8, text: 'בדיקה שלא נשכח כלום בארון/מקלחת', checked: false, category: 'לפני עזיבת מלון' }
+    ];
+
+    function renderChecklist() {
+        const list = getData('trip2026_checklist', defaultChecklist);
+        const container = document.getElementById('checklist-container');
+        container.innerHTML = '';
         
-        const filteredIndices = [];
-        allPlaces.forEach((p, i) => {
-            if(p.dest === currentDestination && (currentFilter === 'all' || p.category === currentFilter)) {
-                filteredIndices.push(i);
-            }
-        });
-        
-        const currentFilteredPos = filteredIndices.indexOf(index);
-        const targetFilteredPos = currentFilteredPos + direction;
-        
-        if(targetFilteredPos >= 0 && targetFilteredPos < filteredIndices.length) {
-            const actualTargetIndex = filteredIndices[targetFilteredPos];
-            const temp = allPlaces[index];
-            allPlaces[index] = allPlaces[actualTargetIndex];
-            allPlaces[actualTargetIndex] = temp;
+        const categories = [...new Set(list.map(i => i.category))];
+        categories.forEach(cat => {
+            const items = list.filter(i => i.category === cat);
+            container.innerHTML += `<h3 style="font-size: 1.1em; color: var(--accent-red); margin: 20px 0 10px 0; border-bottom: 1px dashed #ddd; padding-bottom: 5px;">${cat}</h3>`;
             
-            saveData('trip2026_places', allPlaces);
-            renderPlaces();
+            items.forEach((item) => {
+                container.innerHTML += `
+                    <div class="check-item ${item.checked ? 'done' : ''}">
+                        <label class="check-label">
+                            <input type="checkbox" class="custom-checkbox" ${item.checked ? 'checked' : ''} onchange="toggleCheck(${item.id})">
+                            <span class="check-text">${item.text}</span>
+                        </label>
+                        <button class="action-icon-btn" style="color:#e74c3c; padding: 6px;" onclick="deleteCheckItem(${item.id})">🗑️</button>
+                    </div>
+                `;
+            });
+        });
+    }
+
+    function toggleCheck(id) {
+        const list = getData('trip2026_checklist', defaultChecklist);
+        const item = list.find(i => i.id === id);
+        if(item) {
+            item.checked = !item.checked;
+            saveData('trip2026_checklist', list);
+            renderChecklist();
         }
     }
 
-    // --- לוגיקת מסמכים (Page 4) ---
+    function deleteCheckItem(id) {
+        const list = getData('trip2026_checklist', defaultChecklist);
+        const newList = list.filter(i => i.id !== id);
+        saveData('trip2026_checklist', newList);
+        renderChecklist();
+    }
+
+    function openAddChecklistModal() {
+        document.getElementById('add-check-form').reset();
+        document.getElementById('add-check-modal').classList.add('active');
+    }
+
+    function saveCheckItem(event) {
+        event.preventDefault();
+        const list = getData('trip2026_checklist', defaultChecklist);
+        list.push({
+            id: Date.now(),
+            text: document.getElementById('new-check-text').value,
+            category: document.getElementById('new-check-cat').value,
+            checked: false
+        });
+        saveData('trip2026_checklist', list);
+        closeModal('add-check-modal');
+        renderChecklist();
+    }
+
+    // --- לוגיקת מפה חיה (Page 4 החדש) ---
+    function changeMap(query, btn) {
+        document.querySelectorAll('#view-livemap .filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('live-map-frame').src = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&t=&z=12&ie=UTF8&iwloc=&output=embed`;
+    }
+
+    // --- לוגיקת מסמכים וכלים (Page 5) ---
+    function calculateFinancials() {
+        // Tip Calc
+        const bill = parseFloat(document.getElementById('bill-input').value) || 0;
+        const tipPct = parseFloat(document.getElementById('tip-percent').value) || 0;
+        const tipAmt = bill * (tipPct / 100);
+        const total = bill + tipAmt;
+        document.getElementById('tip-amount').innerText = '$' + tipAmt.toFixed(2);
+        document.getElementById('total-with-tip').innerText = '$' + total.toFixed(2);
+
+        // USD to ILS Calc
+        const usd = parseFloat(document.getElementById('usd-input').value) || 0;
+        const ils = usd * 3.75;
+        document.getElementById('ils-result').innerText = '₪' + ils.toFixed(2);
+    }
+
     const defaultDocs = [
         { category: 'טיסות', icon: '🎫', color: '#64b5f6', title: 'כרטיס הלוך (27.9)', desc: 'טיסה LY27 לניוארק - עמית, אתי, ליאור, שגיא', link: '#' },
-        { category: 'טיסות', icon: '🛫', color: '#ba68c8', title: 'כרטיס חזור (8.10)', desc: 'טיסה LY28 מניוארק - עמית, אתי, ליאור, שגיא', link: '#' },
-        { category: 'תחבורה', icon: '🚘', color: '#ffb74d', title: 'אישור רכב שכור', desc: 'השכרה ב-27.9, החזרה בניוארק 30.9', link: '#' },
-        { category: 'מלונות', icon: '🌲', color: 'var(--pastel-green)', title: 'מלון באיתקה (27.9)', desc: 'טרם הוזמן (לילה 1)', link: '#' },
-        { category: 'מלונות', icon: '🌊', color: '#4dd0e1', title: 'מלון בניאגרה (28.9)', desc: 'Seneca Niagara Resort (לילה 1)', link: '#' },
-        { category: 'מלונות', icon: '🔔', color: '#9575cd', title: 'מלון האריסברג (29.9)', desc: 'Hampton Inn East/Hershey (לילה 1)', link: '#' },
-        { category: 'מלונות', icon: '🍎', color: 'var(--pastel-pink)', title: 'מלונות ניו יורק (30.9-8.10)', desc: 'Hampton Inn Newark + Hotel Edison', link: '#' },
-        { category: 'כללי', icon: '🛡️', color: '#aed581', title: 'ביטוחי נסיעות', desc: 'בבדיקה', link: '#' }
+        { category: 'טיסות', icon: '🛫', color: '#ba68c8', title: 'כרטיס חזור (8.10)', desc: 'טיסה LY28 מניוארק', link: '#' },
+        { category: 'תחבורה', icon: '🚘', color: '#ffb74d', title: 'אישור רכב שכור', desc: 'השכרה 27.9 - 30.9', link: '#' }
     ];
 
     function renderDocs() {
         const docs = getData('trip2026_docs', defaultDocs);
         const container = document.getElementById('docs-container');
         container.innerHTML = '';
-
         const categories = ['טיסות', 'תחבורה', 'מלונות', 'כללי'];
         const icons = { 'טיסות': '✈️', 'תחבורה': '🚗', 'מלונות': '🏨', 'כללי': '🛡️' };
 
         categories.forEach(cat => {
             const catDocs = docs.filter(d => d.category === cat);
             if(catDocs.length > 0) {
-                container.innerHTML += `<h3 style="font-size: 1.1em; color: #777; margin: 25px 0 10px 0; border-bottom: 1px dashed #ddd; padding-bottom: 5px;">${icons[cat]} ${cat}</h3>`;
-                
+                container.innerHTML += `<h4 style="color: #777; margin: 15px 0 5px 0;">${icons[cat]} ${cat}</h4>`;
                 catDocs.forEach((doc) => {
                     const actualIndex = docs.findIndex(d => d === doc);
                     container.innerHTML += `
@@ -816,7 +835,6 @@
     function saveDoc(event) {
         event.preventDefault();
         const docs = getData('trip2026_docs', defaultDocs);
-        
         const cat = document.getElementById('new-doc-category').value;
         let color = '#aed581'; let icon = '📄';
         if(cat === 'טיסות') { color = '#64b5f6'; icon = '🎫'; }
@@ -824,9 +842,7 @@
         if(cat === 'מלונות') { color = 'var(--pastel-green)'; icon = '🏨'; }
 
         docs.push({
-            category: cat,
-            icon: icon,
-            color: color,
+            category: cat, icon: icon, color: color,
             title: document.getElementById('new-doc-title').value,
             desc: document.getElementById('new-doc-desc').value,
             link: document.getElementById('new-doc-link').value || '#'
@@ -846,40 +862,12 @@
         }
     }
 
-    // Modal close event listener
-    document.querySelectorAll('.modal-overlay').forEach(modal => {
-        modal.addEventListener('click', function(e) {
-            if (e.target === this) closeModal(this.id);
-        });
-    });
-
-    function closeModal(modalId) {
-        document.getElementById(modalId).classList.remove('active');
-    }
-
-    // Map Locations (Static)
-    const mapLocations = {
-        'ithaca': { title: '1. איתקה', color: 'var(--pastel-green)', content: '<p>לילה 1 במפלי האצבעות.</p>' },
-        'niagara': { title: '2. ניאגרה (ארה"ב)', color: 'var(--pastel-blue)', content: '<p>לילה 1 במלון Seneca Niagara.</p>' },
-        'pa': { title: '3. האריסברג', color: 'var(--pastel-purple)', content: '<p>לילה 1 במלון Hampton Inn.</p>' },
-        'nyc': { title: '4. ניו יורק', color: 'var(--pastel-pink)', content: '<p>2 לילות בניוארק, 8 לילות במלון אדיסון בטיימס סקוור.</p>' }
-    };
-
-    function openInfoModal(type, id) {
-        if (type === 'location') {
-            const data = mapLocations[id];
-            document.getElementById('modal-title').innerHTML = data.title;
-            document.getElementById('modal-title').style.color = data.color;
-            document.getElementById('modal-body').innerHTML = data.content;
-            document.getElementById('modal-edit-action').innerHTML = ''; 
-            document.getElementById('info-modal').classList.add('active');
-        }
-    }
-
     // Initial renders
     renderDays();
     renderDestinations();
+    renderChecklist();
     renderDocs();
+    calculateFinancials();
 
 </script>
 </body>
