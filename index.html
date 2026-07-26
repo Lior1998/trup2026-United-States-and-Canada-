@@ -223,39 +223,29 @@
     </div>
 
     <!-- מסך 2: מה עושים -->
-   <!-- תוסיף את השורה הזו באזור ה-<head> של הקובץ שלך -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <div id="view-todo" class="view-section">
+        <div id="destinations-view">
+            <div class="section-title">לאן יוצאים? <br><span style="font-size: 0.6em; font-weight: normal; color: #888;">מסעדות, אטרקציות וניווט</span></div>
+            <div class="destinations-grid" id="destinations-grid"></div>
+        </div>
 
-<!-- הקוד הזה מחליף את המערך הסטטי של המקומות שהיה לנו קודם -->
-<script>
-  // הדבק כאן את הקישור שקיבלת מגוגל בשלב 2
-  const GOOGLE_SHEET_CSV_URL = "הדבק_כאן_את_הקישור_שלך";
+        <div id="places-view" style="display: none; position: relative;">
+            <div class="places-header">
+                <button class="back-btn" onclick="closeDestination()">➔</button>
+                <div class="section-title" id="current-dest-title" style="margin: 0;">המלצות</div>
+            </div>
+            <div class="filter-bar" id="category-filters">
+                <button class="filter-btn active" onclick="filterPlaces('all')">הכל</button>
+                <button class="filter-btn" onclick="filterPlaces('מסעדה')">מסעדות</button>
+                <button class="filter-btn" onclick="filterPlaces('קפה')">בתי קפה</button>
+                <button class="filter-btn" onclick="filterPlaces('אטרקציה')">אטרקציות</button>
+                <button class="filter-btn" onclick="filterPlaces('שופינג')">שופינג</button>
+            </div>
+            <div id="places-container"></div>
+            <button class="fab-btn" onclick="openAddPlaceModal()">+</button>
+        </div>
+    </div>
 
-  let placesData = []; // המערך הריק שיתמלא מהטבלה
-
-  // פונקציה שמושכת את הנתונים ברגע שהעמוד נטען
-  function loadPlacesFromSheets() {
-    Papa.parse(GOOGLE_SHEET_CSV_URL, {
-      download: true,
-      header: true,
-      complete: function(results) {
-        // הנתונים נמשכו בהצלחה!
-        placesData = results.data.filter(place => place.Name); // מסנן שורות ריקות
-        renderPlaces(placesData); // קורא לפונקציה שמציירת את הכרטיסיות על המסך
-      },
-      error: function(error) {
-        console.error("שגיאה בטעינת הנתונים מגוגל:", error);
-      }
-    });
-  }
-
-  // מפעיל את המשיכה כשהעמוד עולה
-  document.addEventListener("DOMContentLoaded", () => {
-    loadPlacesFromSheets();
-  });
-
-  // (כאן תישאר פונקציית ה-renderPlaces שלך שמייצרת את ה-HTML של כל כרטיסייה)
-</script>
     <!-- מסך 3: צ'קליסט -->
     <div id="view-checklist" class="view-section">
         <div class="section-title">צ'קליסט <br><span style="font-size: 0.6em; font-weight: normal; color: #888;">ציוד, אריזות ומשימות ✅</span></div>
