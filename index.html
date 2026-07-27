@@ -108,7 +108,7 @@
         }
         .destination-btn:active { transform: scale(0.95); }
         .dest-icon { font-size: 2.5em; margin-bottom: 10px; }
-        .dest-name { font-weight: 600; font-size: 1.2em; }
+        .dest-name { font-weight: 600; font-size: 1.1em; }
 
         /* Places & Recommendations */
         .places-header { display: flex; align-items: center; margin-bottom: 15px; }
@@ -229,18 +229,48 @@
 
     <!-- מסך 2: מה עושים -->
     <div id="view-todo" class="view-section">
+        
+        <!-- א. מסך יעדים ראשי -->
         <div id="destinations-view">
-            <div class="section-title">לאן יוצאים? <br><span style="font-size: 0.6em; font-weight: normal; color: #888;">מסעדות, אטרקציות וניווט</span></div>
+            <div class="section-title">לאן יוצאים? <br><span style="font-size: 0.6em; font-weight: normal; color: #888;">בחר עיר או אזור</span></div>
             <div class="destinations-grid" id="destinations-grid"></div>
         </div>
 
+        <!-- ב. מסך ימי ניו יורק (נפתח רק שלוחצים על ניו יורק) -->
+        <div id="nyc-days-view" style="display: none;">
+            <div class="places-header">
+                <button class="back-btn" onclick="backToDestinations()">➔</button>
+                <div class="section-title" style="margin: 0;">ניו יורק - תכנון לפי ימים</div>
+            </div>
+            <p style="font-size: 0.9em; color: #777; margin-top: -10px; margin-bottom: 20px;">בחר יום/אזור כדי לראות ולהוסיף אטרקציות ומסעדות רלוונטיות, כדי למנוע בלאגן.</p>
+            
+            <div class="destinations-grid">
+                <button class="destination-btn" style="border-bottom: 5px solid #f06292;" onclick="openPlacesView('nyc', 'day5', 'יום 5: מידטאון (1.10)')">
+                    <div class="dest-icon">🏙️</div><div class="dest-name">יום 5: מידטאון</div>
+                </button>
+                <button class="destination-btn" style="border-bottom: 5px solid #ba68c8;" onclick="openPlacesView('nyc', 'day6', 'יום 6: דאונטאון (2.10)')">
+                    <div class="dest-icon">🗽</div><div class="dest-name">יום 6: דאונטאון</div>
+                </button>
+                <button class="destination-btn" style="border-bottom: 5px solid #4dd0e1;" onclick="openPlacesView('nyc', 'day7', 'יום 7: ניו ג\'רזי (3.10)')">
+                    <div class="dest-icon">🛍️</div><div class="dest-name">יום 7: שופינג ג'רזי</div>
+                </button>
+                <button class="destination-btn" style="border-bottom: 5px solid #ffb74d;" onclick="openPlacesView('nyc', 'day8', 'יום 8: צ\'לסי (4.10)')">
+                    <div class="dest-icon">🚂</div><div class="dest-name">יום 8: צ'לסי והיי-ליין</div>
+                </button>
+                <button class="destination-btn" style="border-bottom: 5px solid #81c784;" onclick="openPlacesView('nyc', 'day9', 'ימים 9-12')">
+                    <div class="dest-icon">🚕</div><div class="dest-name">ימים 9-12</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- ג. מסך המקומות (רשימת המסעדות והאטרקציות עצמן) -->
         <div id="places-view" style="display: none; position: relative;">
             <div class="places-header">
-                <button class="back-btn" onclick="closeDestination()">➔</button>
+                <button class="back-btn" onclick="backFromPlaces()">➔</button>
                 <div class="section-title" id="current-dest-title" style="margin: 0;">המלצות</div>
             </div>
             
-            <!-- אזור הסינון החכם -->
+            <!-- אזור הסינון -->
             <div class="filter-bar" id="category-filters">
                 <select id="category-filter" class="filter-select" onchange="filterPlaces()">
                     <option value="all">כל הקטגוריות</option>
@@ -248,22 +278,6 @@
                     <option value="קפה">בתי קפה ☕</option>
                     <option value="אטרקציה">אטרקציות 🗽</option>
                     <option value="שופינג">שופינג 🛍️</option>
-                </select>
-
-                <select id="region-filter" class="filter-select" onchange="filterPlaces()">
-                    <option value="all">כל האזורים</option>
-                    <option value="midtown">מידטאון</option>
-                    <option value="downtown">דאונטאון</option>
-                    <option value="chelsea">צ'לסי</option>
-                    <option value="brooklyn">ברוקלין</option>
-                    <option value="nj">ניו ג'רזי</option>
-                </select>
-
-                <select id="crowd-filter" class="filter-select" onchange="filterPlaces()">
-                    <option value="all">עומס: הכל</option>
-                    <option value="low">רגוע 🌿</option>
-                    <option value="medium">זרימה סבירה 🚶</option>
-                    <option value="high">עמוס ותוסס ⚡</option>
                 </select>
             </div>
             
@@ -485,10 +499,9 @@
 <script>
 
     // ----------------------------------------------------------------------
-    // !!!!!!!!!!! הדבק את הקישור שקיבלת מגוגל בין הגרשיים כאן !!!!!!!!!!!
+    // סנכרון לגוגל שיטס (אם מוגדר)
     // ----------------------------------------------------------------------
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwODxIbL9pT7yMffwpwW7bjN1iWW4ccIJkPKWlscILkS70bi2fJ_CadpZy6GvMkzs64hQ/exec'; 
-    // ----------------------------------------------------------------------
 
     // --- ספירה לאחור ---
     const countDownDate = new Date("Sep 27, 2026 00:30:00").getTime();
@@ -519,7 +532,7 @@
 
     async function saveToCloud() {
         if(GOOGLE_SCRIPT_URL === 'הדבק_כאן_את_הקישור_שלך') {
-            alert("❌ שגיאה: לא הגדרת את הקישור ל-Google Script בקוד של האפליקציה (GOOGLE_SCRIPT_URL).");
+            alert("❌ שגיאה: לא הגדרת את הקישור ל-Google Script.");
             return;
         }
         const loader = document.getElementById('sync-loader');
@@ -543,7 +556,7 @@
 
     async function loadFromCloud() {
         if(GOOGLE_SCRIPT_URL === 'הדבק_כאן_את_הקישור_שלך') {
-            alert("❌ שגיאה: לא הגדרת את הקישור ל-Google Script בקוד של האפליקציה.");
+            alert("❌ שגיאה: לא הגדרת את הקישור ל-Google Script.");
             return;
         }
         const loader = document.getElementById('sync-loader');
@@ -581,7 +594,13 @@
         document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
         document.getElementById(viewId).classList.add('active');
         btnElement.classList.add('active');
-        if(viewId === 'view-todo') closeDestination();
+        
+        // איפוס ניווט פנימי במסך מה עושים
+        if(viewId === 'view-todo') {
+            document.getElementById('places-view').style.display = 'none';
+            document.getElementById('nyc-days-view').style.display = 'none';
+            document.getElementById('destinations-view').style.display = 'block';
+        }
     }
 
     function closeModal(modalId) {
@@ -637,17 +656,17 @@
         document.getElementById('total-with-tip').innerText = '$' + total.toFixed(2);
     }
 
-    // --- ימים ---
+    // --- ימים ללו"ז הראשי ---
     const defaultDays = [
         { id: 'day1', icon: '🛬', color: 'var(--pastel-green)', title: 'יום 1 (27.9) - מתחילים!', desc: 'נחיתה, רכב, ונסיעה לטבע באיתקה', content: '<h4><span class="time-badge">05:15</span> נחיתה ורכב</h4><p>נחיתה בניוארק, איסוף מזוודות ורכב שכור.</p>' },
         { id: 'day2', icon: '🌊', color: 'var(--pastel-blue)', title: 'יום 2 (28.9) - מפלי הניאגרה', desc: 'הגעה למפלים בצד האמריקאי', content: '<h4><span class="time-badge">12:00</span> המפלים</h4><p>צ\'ק אין במלון Seneca Niagara.</p>' },
         { id: 'day3', icon: '🔔', color: 'var(--pastel-purple)', title: 'יום 3 (29.9) - פנסילבניה', desc: 'לצ\'וורת\' ונסיעה להאריסברג', content: '<h4><span class="time-badge">15:00</span> להאריסברג</h4><p>המשך נסיעה למלון Hampton Inn.</p>' },
         { id: 'day4', icon: '🏍️', color: 'var(--pastel-orange)', title: 'יום 4 (30.9) - ברזל ושוקולד', desc: 'הארלי, הרשיז והגעה לניוארק', content: '<h4><span class="time-badge">09:00</span> בוקר</h4><p>מפעל הארלי או הרשיז.</p>' },
-        { id: 'day5', icon: '🚲', color: 'var(--pastel-pink)', title: 'יום 5 (1.10)', desc: 'סנטרל פארק, שדרה 5 ותצפית', content: '<p>סנטרל פארק ותצפית.</p>', section: 'nyc' },
-        { id: 'day6', icon: '🗽', color: 'var(--pastel-pink)', title: 'יום 6 (2.10)', desc: 'דאונטאון, פסל החירות והתאומים', content: '<p>דאונטאון ופסל החירות.</p>', section: 'nyc' },
-        { id: 'day7', icon: '🛍️', color: 'var(--pastel-pink)', title: 'יום 7 (3.10)', desc: 'שופינג בג\'רזי גרדנס', content: '<p>יום קניות פטור ממס.</p>', section: 'nyc' },
-        { id: 'day8', icon: '🚂', color: 'var(--pastel-pink)', title: 'יום 8 (4.10)', desc: 'האדסון יארדס וצ\'לסי מרקט', content: '<p>ההיי ליין וצ\'לסי מרקט.</p>', section: 'nyc' },
-        { id: 'day9', icon: '🚕', color: 'var(--pastel-pink)', title: 'ימים 9-12 (5-8.10)', desc: 'ברוקלין, סוהו, ברודווי וטיסה הביתה', content: '<p>ב-8.10 טיסה חזרה בשעה 13:30.</p>', section: 'nyc' }
+        { id: 'day5', icon: '🏙️', color: 'var(--pastel-pink)', title: 'יום 5 (1.10) - מידטאון', desc: 'טיימס סקוור, תצפית ומרכז העיר', content: '<p>טיימס סקוור, בראיינט פארק, ותצפית (כמו ה-Summit).</p>', section: 'nyc' },
+        { id: 'day6', icon: '🗽', color: 'var(--pastel-pink)', title: 'יום 6 (2.10) - דאונטאון', desc: 'גראונד זירו, וול סטריט ופסל החירות', content: '<p>אזור הגראונד זירו, וול סטריט, והפלגה במעבורת.</p>', section: 'nyc' },
+        { id: 'day7', icon: '🛍️', color: 'var(--pastel-pink)', title: 'יום 7 (3.10) - שופינג ג\'רזי', desc: 'אאוטלט ג\'רזי גארדנס', content: '<p>נסיעה לניו ג\'רזי ליום של קניות פטורות ממס.</p>', section: 'nyc' },
+        { id: 'day8', icon: '🚂', color: 'var(--pastel-pink)', title: 'יום 8 (4.10) - צ\'לסי', desc: 'צ\'לסי מרקט, ההיי-ליין והאדסון יארדס', content: '<p>הליכה על פסי הרכבת הישנים ואוכל טוב בשוק צ\'לסי.</p>', section: 'nyc' },
+        { id: 'day9', icon: '🚕', color: 'var(--pastel-pink)', title: 'ימים 9-12 (5-8.10)', desc: 'ברוקלין, סוהו, וטיסה הביתה', content: '<p>חציית גשר ברוקלין, סוהו, ליטל איטלי. ב-8.10 טיסה חזרה בשעה 13:30.</p>', section: 'nyc' }
     ];
 
     function renderDays() {
@@ -706,12 +725,12 @@
         }
     }
 
-    // --- יעדים ומקומות ---
+    // --- יעדים ומקומות (הלוגיקה החדשה עם "תיקיות" ימי ניו יורק) ---
     const defaultDestinations = [
         { id: 'ithaca', name: 'איתקה', icon: '🌲', color: '#81c784' },
         { id: 'niagara', name: 'ניאגרה', icon: '🌊', color: '#64b5f6' },
         { id: 'pa', name: 'פנסילבניה', icon: '🔔', color: '#ba68c8' },
-        { id: 'nyc', name: 'ניו יורק', icon: '🍎', color: '#f06292' }
+        { id: 'nyc', name: 'ניו יורק (לפי ימים)', icon: '🍎', color: '#f06292' }
     ];
 
     function renderDestinations() {
@@ -731,56 +750,73 @@
     }
 
     let currentDestination = '';
+    let currentNycDay = ''; // משתנה ששומר באיזה תת-יום אנחנו בניו יורק
 
     const defaultPlaces = [
         // Ithaca
-        { dest: 'ithaca', category: 'מסעדה', name: 'Ithaca Beer Co.', rating: 4.6, price: '$$', hours: '12:00 - 21:00', distance: '10 דק׳', address: '122 Ithaca Beer Dr, NY', desc: 'מבשלה עם מדשאות ענק.' },
+        { dest: 'ithaca', day: '', category: 'מסעדה', name: 'Ithaca Beer Co.', rating: 4.6, price: '$$', hours: '12:00 - 21:00', distance: '10 דק׳', address: '122 Ithaca Beer Dr, NY', desc: 'מבשלה עם מדשאות ענק.' },
         
-        // Niagara (הוספנו את ה-4 שביקשת!)
-        { dest: 'niagara', category: 'אטרקציה', name: 'Maid of the Mist', rating: 4.7, price: '$$', hours: '09:00 - 17:00', distance: 'קרוב למלון', address: '1 Prospect St, NY', desc: 'השייט המפורסם.' },
-        { dest: 'niagara', category: 'מסעדה', name: 'Antica Pizzeria & Ristorante', rating: 4.5, price: '$$', hours: '12:00 - 22:00', distance: '3 דקות הליכה', address: '5785 Victoria Ave, Niagara Falls', desc: 'מסעדה איטלקית מעולה ומרווחת עם פיצות בתנור עצים ופסטות.' },
-        { dest: 'niagara', category: 'מסעדה', name: 'Sandstone Grillhouse', rating: 4.4, price: '$$-$$$', hours: '16:00 - 22:30', distance: '6 דקות הליכה', address: '5467 Victoria Ave, Niagara Falls', desc: 'מסעדה באווירה טובה שמגישה סטייקים, פירות ים ומנות קלאסיות.' },
-        { dest: 'niagara', category: 'קפה', name: 'Tim Hortons', rating: 4.2, price: '$', hours: '06:00 - 22:00', distance: '4 דקות הליכה', address: '5543 Victoria Ave, Niagara Falls', desc: 'חוויית חובה קנדית! קפה ודונאט ברשת המפורסמת ביותר.' },
-        { dest: 'niagara', category: 'קפה', name: 'Starbucks (Clifton Hill)', rating: 4.3, price: '$$', hours: '06:30 - 23:00', distance: '10 דקות הליכה', address: '4960 Clifton Hill, Niagara Falls', desc: 'נקודה מושלמת לעצור בה, לקחת קפה לדרך, ולהמשיך ברגל לתצפית.' },
+        // Niagara
+        { dest: 'niagara', day: '', category: 'אטרקציה', name: 'Maid of the Mist', rating: 4.7, price: '$$', hours: '09:00 - 17:00', distance: 'קרוב למלון', address: '1 Prospect St, NY', desc: 'השייט המפורסם.' },
+        { dest: 'niagara', day: '', category: 'מסעדה', name: 'Antica Pizzeria & Ristorante', rating: 4.5, price: '$$', hours: '12:00 - 22:00', distance: '3 דקות הליכה', address: '5785 Victoria Ave, Niagara Falls', desc: 'מסעדה איטלקית מעולה ומרווחת עם פיצות בתנור עצים ופסטות.' },
+        { dest: 'niagara', day: '', category: 'מסעדה', name: 'Sandstone Grillhouse', rating: 4.4, price: '$$-$$$', hours: '16:00 - 22:30', distance: '6 דקות הליכה', address: '5467 Victoria Ave, Niagara Falls', desc: 'מסעדה באווירה טובה שמגישה סטייקים, פירות ים ומנות קלאסיות.' },
+        { dest: 'niagara', day: '', category: 'קפה', name: 'Tim Hortons', rating: 4.2, price: '$', hours: '06:00 - 22:00', distance: '4 דקות הליכה', address: '5543 Victoria Ave, Niagara Falls', desc: 'חוויית חובה קנדית! קפה ודונאט ברשת המפורסמת ביותר.' },
+        { dest: 'niagara', day: '', category: 'קפה', name: 'Starbucks (Clifton Hill)', rating: 4.3, price: '$$', hours: '06:30 - 23:00', distance: '10 דקות הליכה', address: '4960 Clifton Hill, Niagara Falls', desc: 'נקודה מושלמת לעצור בה, לקחת קפה לדרך, ולהמשיך ברגל לתצפית.' },
         
-        // NYC & NJ
-        { dest: 'nyc', category: 'מסעדה', region: 'midtown', crowd: 'high', name: 'Carmine\'s Italian', rating: 4.5, price: '$$', hours: '11:30 - 23:00', distance: 'קרוב לאדיסון', address: '200 W 44th St, NY', desc: 'אוכל איטלקי ענקי לחלוקה בטיימס סקוור.' },
-        { dest: 'nyc', category: 'שופינג', region: 'nj', crowd: 'medium', name: 'The Mills at Jersey Gardens', rating: 4.6, price: '$$', hours: '10:00 - 20:00', distance: 'כ-45 דקות מנהטן', address: '651 Kapkowski Rd, Elizabeth, NJ', desc: 'אאוטלט ענק ומקורה. אין מס על ביגוד והנעלה. שפע של חנויות ספורט עם מלאי מעולה למידות גדולות (47 ומעלה).' },
-        { dest: 'nyc', category: 'מסעדה', region: 'chelsea', crowd: 'high', name: 'Chelsea Market', rating: 4.7, price: '$$', hours: '08:00 - 21:00', distance: '20 דקות בסאבוויי', address: '75 9th Ave, New York, NY', desc: 'שוק אוכל מקורה ומטורף. עמוס יחסית אבל חוויה קולינרית.' }
+        // NYC (משויך לתיקיות/ימים)
+        { dest: 'nyc', day: 'day5', category: 'מסעדה', name: 'Carmine\'s Italian', rating: 4.5, price: '$$', hours: '11:30 - 23:00', distance: 'מידטאון', address: '200 W 44th St, NY', desc: 'אוכל איטלקי ענקי לחלוקה בטיימס סקוור.' },
+        { dest: 'nyc', day: 'day7', category: 'שופינג', name: 'The Mills at Jersey Gardens', rating: 4.6, price: '$$', hours: '10:00 - 20:00', distance: 'כ-45 דקות מנהטן', address: '651 Kapkowski Rd, Elizabeth, NJ', desc: 'אאוטלט ענק ומקורה. אין מס על ביגוד והנעלה. שפע של חנויות ספורט עם מלאי מעולה למידות גדולות (47 ומעלה).' },
+        { dest: 'nyc', day: 'day8', category: 'מסעדה', name: 'Chelsea Market', rating: 4.7, price: '$$', hours: '08:00 - 21:00', distance: 'צ\'לסי', address: '75 9th Ave, New York, NY', desc: 'שוק אוכל מקורה ומטורף. חוויה קולינרית.' }
     ];
 
     function openDestination(destId, destName) {
         currentDestination = destId;
         document.getElementById('destinations-view').style.display = 'none';
-        document.getElementById('places-view').style.display = 'block';
-        document.getElementById('current-dest-title').innerText = "המלצות ב" + destName;
         
-        // איפוס תפריטי הסינון
-        document.getElementById("category-filter").value = "all";
-        document.getElementById("region-filter").value = "all";
-        document.getElementById("crowd-filter").value = "all";
-
-        // תצוגה חכמה: להראות את סינוני העומס והאזור רק בניו יורק
         if (destId === 'nyc') {
-            document.getElementById("region-filter").style.display = 'block';
-            document.getElementById("crowd-filter").style.display = 'block';
+            // אם לחצו על ניו יורק -> פותחים את מסך בחירת הימים
+            document.getElementById('nyc-days-view').style.display = 'block';
         } else {
-            document.getElementById("region-filter").style.display = 'none';
-            document.getElementById("crowd-filter").style.display = 'none';
+            // אם לחצו על עיר אחרת -> פותחים ישר את מסך המקומות
+            currentNycDay = '';
+            document.getElementById('places-view').style.display = 'block';
+            document.getElementById('current-dest-title').innerText = "המלצות ב" + destName;
+            document.getElementById("category-filter").value = "all";
+            filterPlaces();
         }
+    }
 
+    function openPlacesView(destId, dayId, dayName) {
+        currentDestination = destId;
+        currentNycDay = dayId;
+        
+        document.getElementById('nyc-days-view').style.display = 'none';
+        document.getElementById('places-view').style.display = 'block';
+        document.getElementById('current-dest-title').innerText = dayName;
+        document.getElementById("category-filter").value = "all";
+        
         filterPlaces();
     }
 
-    function closeDestination() {
-        document.getElementById('places-view').style.display = 'none';
+    function backToDestinations() {
+        document.getElementById('nyc-days-view').style.display = 'none';
         document.getElementById('destinations-view').style.display = 'block';
+    }
+
+    function backFromPlaces() {
+        document.getElementById('places-view').style.display = 'none';
+        
+        if (currentDestination === 'nyc') {
+            // חוזרים למסך התיקיות של ניו יורק
+            document.getElementById('nyc-days-view').style.display = 'block';
+        } else {
+            // חוזרים למסך הערים הראשי
+            document.getElementById('destinations-view').style.display = 'block';
+        }
     }
 
     function filterPlaces() {
         const categoryValue = document.getElementById("category-filter").value;
-        const regionValue = document.getElementById("region-filter").value;
-        const crowdValue = document.getElementById("crowd-filter").value;
 
         const container = document.getElementById('places-container');
         container.innerHTML = '';
@@ -791,15 +827,17 @@
                 // חייב להיות בעיר שנבחרה
                 if (place.dest !== currentDestination) return false;
                 
+                // אם אנחנו בניו יורק, חייב להתאים לתיקייה (היום) שבחרנו
+                if (currentDestination === 'nyc' && place.day !== currentNycDay) return false;
+                
+                // סינון קטגוריה
                 const matchCategory = categoryValue === "all" || place.category === categoryValue;
-                const matchRegion = regionValue === "all" || place.region === regionValue || !place.region;
-                const matchCrowd = crowdValue === "all" || place.crowd === crowdValue || !place.crowd;
 
-                return matchCategory && matchRegion && matchCrowd;
+                return matchCategory;
             });
 
         if (filtered.length === 0) {
-            container.innerHTML = '<p style="text-align:center; color:#888; margin-top:20px;">לא מצאנו מקומות שמתאימים לסינון הזה.</p>';
+            container.innerHTML = '<p style="text-align:center; color:#888; margin-top:30px;">התיקייה ריקה! הוסיפו מסעדות ואטרקציות באמצעות כפתור ה- (+) למטה.</p>';
             return;
         }
 
@@ -847,20 +885,29 @@
         event.preventDefault();
         const allPlaces = getData('trip2026_places', defaultPlaces);
         const index = parseInt(document.getElementById('edit-place-index').value);
+        
+        // יצירת האובייקט החדש - שיוך אוטומטי לעיר וליום הנוכחי!
         const placeData = {
             dest: currentDestination,
+            day: currentNycDay, // ישייך אוטומטית ל"יום 5" למשל, אם פתחנו את התיקייה הזו
             category: document.getElementById('new-place-category').value,
             name: document.getElementById('new-place-name').value,
-            rating: 5.0, price: document.getElementById('new-place-price').value,
+            rating: 5.0, 
+            price: document.getElementById('new-place-price').value,
             hours: document.getElementById('new-place-hours').value,
             distance: document.getElementById('new-place-distance').value,
             address: document.getElementById('new-place-address').value,
             desc: document.getElementById('new-place-desc').value
-            // מקומות ידניים יופיעו בכל העומסים והאזורים כברירת מחדל
         };
 
-        if (index === -1) allPlaces.push(placeData);
-        else { placeData.dest = allPlaces[index].dest; allPlaces[index] = placeData; }
+        if (index === -1) {
+            allPlaces.push(placeData);
+        } else { 
+            // במצב עריכה שומרים על המיקומים המקוריים
+            placeData.dest = allPlaces[index].dest; 
+            placeData.day = allPlaces[index].day;
+            allPlaces[index] = placeData; 
+        }
 
         saveData('trip2026_places', allPlaces);
         closeModal('add-place-modal');
@@ -1044,3 +1091,4 @@
 </script>
 </body>
 </html>
+```eof
