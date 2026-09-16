@@ -6,17 +6,7 @@
     <title>המסע לארה"ב 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* מצב קריאה בלבד - מופעל דרך הקישור */
-body.read-only .fab-btn,
-body.read-only .action-icon-btn,
-body.read-only .delete-doc-btn,
-body.read-only .sync-box,
-body.read-only #modal-edit-action {
-    display: none !important;
-}
-body.read-only .check-label {
-    pointer-events: none; /* מונע לחיצה על תיבות הצ'קליסט */
-}
+
         :root {
             --bg-main: #fcf9f2;
             --text-main: #4a4036;
@@ -554,18 +544,7 @@ body.read-only .check-label {
     // ----------------------------------------------------------------------
     // סנכרון לגוגל שיטס (אם מוגדר)
     // ----------------------------------------------------------------------
-    // --- בדיקת מצב קריאה בלבד (לשיתוף הקישור) ---
-const urlParams = new URLSearchParams(window.location.search);
-if (urlParams.get('view') === 'true') {
-    document.body.classList.add('read-only');
-}
-
-// הפעלה ראשונית
-renderDays();
-renderDestinations();
-renderChecklist();
-renderDocs();
-fetchLiveExchangeRate();
+   
     
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwODxIbL9pT7yMffwpwW7bjN1iWW4ccIJkPKWlscILkS70bi2fJ_CadpZy6GvMkzs64hQ/exec'; 
 
