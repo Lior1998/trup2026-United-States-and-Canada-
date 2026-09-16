@@ -198,13 +198,8 @@
         .modal-title { font-size: 1.3em; font-weight: 700; display: flex; align-items: center; gap: 10px; }
         .header-actions { display: flex; gap: 10px; align-items: center;}
         .close-btn { background: #f0f0f0; border: none; width: 35px; height: 35px; border-radius: 50%; font-size: 1.2em; font-weight: bold; color: #555; cursor: pointer; }
-        .modal-body { font-size: 1em; line-height: 1.6; color: #444; overflow-y: auto; padding-left: 5px;}
+        .modal-body { font-size: 1em; line-height: 1.6; color: #444; overflow-y: auto; padding-left: 5px; white-space: pre-wrap;}
 
-        /* Live Map Buttons Fix */
-        .map-filter-bar { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; }
-        .map-filter-bar::-webkit-scrollbar { display: none; }
-        .map-filter-btn { padding: 8px 16px; border-radius: 20px; background: #f0f0f0; border: none; color: #555; white-space: nowrap; font-weight: 600; cursor: pointer; font-family: inherit; }
-        .map-filter-btn.active { background: #4a4036; color: #fff; }
     </style>
 </head>
 <body>
@@ -252,22 +247,23 @@
                     <div class="dest-icon">🗽</div><div class="dest-name">יום 6: דאונטאון</div>
                 </button>
                 <button class="destination-btn" style="border-bottom: 5px solid #4dd0e1;" onclick="openPlacesView('nyc', 'day7', 'יום 7: ניו ג\'רזי (3.10)')">
-                    <div class="dest-icon">🛍️</div><div class="dest-name">יום 7: שופינג ג'רזי</div>
+                    <div class="dest-icon">🛍️</div><div class="dest-name">יום 7: שופינג בג'רזי</div>
                 </button>
                 <button class="destination-btn" style="border-bottom: 5px solid #ffb74d;" onclick="openPlacesView('nyc', 'day8', 'יום 8: צ\'לסי (4.10)')">
-                    <div class="dest-icon">🚂</div><div class="dest-name">יום 8: צ'לסי והיי-ליין</div>
+                    <div class="dest-icon">🚂</div><div class="dest-name">יום 8: צ'לסי</div>
                 </button>
-                <button class="destination-btn" style="border-bottom: 5px solid #81c784;" onclick="openPlacesView('nyc', 'day9', 'ימים 9-12')">
-                    <div class="dest-icon">🚕</div><div class="dest-name">ימים 9-12</div>
+                <!-- תיקון הבאג: הוספת הימים 9 עד 12 -->
+                <button class="destination-btn" style="border-bottom: 5px solid #81c784;" onclick="openPlacesView('nyc', 'day9', 'יום 9: ברוקלין (5.10)')">
+                    <div class="dest-icon">🌉</div><div class="dest-name">יום 9: ברוקלין</div>
                 </button>
-                 <button class="destination-btn" style="border-bottom: 5px solid #ffb74d;" onclick="openPlacesView('nyc', 'day8', 'יום 8: צ\'לסי (4.10)')">
-                    <div class="dest-icon">🚂</div><div class="dest-name">יום 8: צ'לסי והיי-ליין</div>
+                <button class="destination-btn" style="border-bottom: 5px solid #64b5f6;" onclick="openPlacesView('nyc', 'day10', 'יום 10: סוהו וצ\'יינה טאון (6.10)')">
+                    <div class="dest-icon">🥟</div><div class="dest-name">יום 10: סוהו</div>
                 </button>
-                 <button class="destination-btn" style="border-bottom: 5px solid #ffb74d;" onclick="openPlacesView('nyc', 'day8', 'יום 8: צ\'לסי (4.10)')">
-                    <div class="dest-icon">🚂</div><div class="dest-name">יום 8: צ'לסי והיי-ליין</div>
-                     </button>       
-                      <button class="destination-btn" style="border-bottom: 5px solid #ffb74d;" onclick="openPlacesView('nyc', 'day8', 'יום 8: צ\'לסי (4.10)')">
-                    <div class="dest-icon">🚂</div><div class="dest-name">יום 8: צ'לסי והיי-ליין</div>
+                <button class="destination-btn" style="border-bottom: 5px solid #aed581;" onclick="openPlacesView('nyc', 'day11', 'יום 11: סנטרל פארק (7.10)')">
+                    <div class="dest-icon">🌳</div><div class="dest-name">יום 11: סנטרל פארק</div>
+                </button>
+                <button class="destination-btn" style="border-bottom: 5px solid #ffb74d;" onclick="openPlacesView('nyc', 'day12', 'יום 12: חוזרים הביתה (8.10)')">
+                    <div class="dest-icon">✈️</div><div class="dest-name">יום 12: טיסה</div>
                 </button>
             </div>
         </div>
@@ -302,17 +298,45 @@
         <button class="fab-btn" onclick="openAddChecklistModal()">+</button>
     </div>
 
-    <!-- מסך 4: מפה חיה -->
+    <!-- מסך 4: מרכז ניווט ותחבורה (החלף את המפה החיה) -->
     <div id="view-livemap" class="view-section">
-        <div class="section-title">מפה חיה 🗺️ <br><span style="font-size: 0.6em; font-weight: normal; color: #888;">נווטו בקלות באזור שלכם</span></div>
-        <div class="map-filter-bar">
-            <button class="map-filter-btn active" onclick="changeMap('Ithaca, NY', this)">איתקה</button>
-            <button class="map-filter-btn" onclick="changeMap('Niagara Falls, NY', this)">ניאגרה</button>
-            <button class="map-filter-btn" onclick="changeMap('Harrisburg, PA', this)">האריסברג</button>
-            <button class="map-filter-btn" onclick="changeMap('Times Square, NY', this)">ניו יורק</button>
+        <div class="section-title">ניווט ותחבורה 🚇 <br><span style="font-size: 0.6em; font-weight: normal; color: #888;">קיצורי דרך להתמצאות מהירה</span></div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+            <a href="https://new.mta.info/map/5256" target="_blank" style="background: #fff; padding: 20px; border-radius: 15px; text-align: center; text-decoration: none; color: #333; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 2px solid #e3f2fd; display: block;">
+                <div style="font-size: 2.5em; margin-bottom: 10px;">🚇</div>
+                <div style="font-weight: 600;">מפת הסאבווי (NY)</div>
+            </a>
+            <a href="https://m.uber.com/ul" target="_blank" style="background: #fff; padding: 20px; border-radius: 15px; text-align: center; text-decoration: none; color: #333; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 2px solid #e3f2fd; display: block;">
+                <div style="font-size: 2.5em; margin-bottom: 10px;">🚕</div>
+                <div style="font-weight: 600;">הזמן Uber</div>
+            </a>
         </div>
-        <div style="border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 2px solid #fff;">
-            <iframe id="live-map-frame" width="100%" height="450" frameborder="0" style="border:0;" src="https://maps.google.com/maps?q=Ithaca,NY&t=&z=12&ie=UTF8&iwloc=&output=embed" allowfullscreen></iframe>
+
+        <h3 style="font-size: 1.1em; color: #777; margin: 20px 0 10px 0; border-bottom: 1px dashed #ddd; padding-bottom: 5px;">📍 ניווט מהיר למלונות שלנו</h3>
+        <div class="doc-link" style="border-right-color: var(--pastel-blue);">
+            <div class="doc-icon">🏨</div>
+            <div class="doc-details">
+                <h4>מלון - ניאגרה (Seneca)</h4>
+                <p>בלחיצה אחת לוויז</p>
+            </div>
+            <a href="https://waze.com/ul?q=Seneca+Niagara+Resort&navigate=yes" target="_blank" class="action-icon-btn" style="text-decoration:none;">Waze</a>
+        </div>
+        <div class="doc-link" style="border-right-color: var(--pastel-purple);">
+            <div class="doc-icon">🏨</div>
+            <div class="doc-details">
+                <h4>מלון - האריסברג (Hampton)</h4>
+                <p>בלחיצה אחת לוויז</p>
+            </div>
+            <a href="https://waze.com/ul?q=Hampton+Inn+Harrisburg&navigate=yes" target="_blank" class="action-icon-btn" style="text-decoration:none;">Waze</a>
+        </div>
+        <div class="doc-link" style="border-right-color: var(--pastel-pink);">
+            <div class="doc-icon">🗽</div>
+            <div class="doc-details">
+                <h4>המלון בניו יורק (Times Square)</h4>
+                <p>בלחיצה אחת לוויז</p>
+            </div>
+            <a href="https://waze.com/ul?q=Times+Square+New+York&navigate=yes" target="_blank" class="action-icon-btn" style="text-decoration:none;">Waze</a>
         </div>
     </div>
 
@@ -380,7 +404,7 @@
         <button class="nav-item active" onclick="switchView('view-home', this)"><span class="nav-icon">🗽</span><span>היום</span></button>
         <button class="nav-item" onclick="switchView('view-todo', this)"><span class="nav-icon">🧭</span><span>מקומות</span></button>
         <button class="nav-item" onclick="switchView('view-checklist', this)"><span class="nav-icon">✅</span><span>צ'קליסט</span></button>
-        <button class="nav-item" onclick="switchView('view-livemap', this)"><span class="nav-icon">🗺️</span><span>מפה</span></button>
+        <button class="nav-item" onclick="switchView('view-livemap', this)"><span class="nav-icon">🚇</span><span>ניווט</span></button>
         <button class="nav-item" onclick="switchView('view-tools', this)"><span class="nav-icon">💼</span><span>כלים</span></button>
     </nav>
 
@@ -409,7 +433,8 @@
                     <input type="hidden" id="edit-day-id">
                     <div class="form-group"><label>כותרת:</label><input type="text" id="edit-day-title" required></div>
                     <div class="form-group"><label>תיאור קצר:</label><input type="text" id="edit-day-desc" required></div>
-                    <div class="form-group"><label>תוכן מפורט:</label><textarea id="edit-day-content" rows="6" required></textarea></div>
+                    <!-- הוספנו פה הסבר קטן שירדתי שורות יעבדו -->
+                    <div class="form-group"><label>תוכן מפורט (אפשר לרדת שורות):</label><textarea id="edit-day-content" rows="6" required></textarea></div>
                     <button type="submit" class="submit-btn">שמור שינויים</button>
                 </form>
             </div>
@@ -506,7 +531,6 @@
 </div>
 
 <script>
-
     // ----------------------------------------------------------------------
     // סנכרון לגוגל שיטס (אם מוגדר)
     // ----------------------------------------------------------------------
@@ -519,7 +543,8 @@
         document.getElementById("countdown").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24)) + " ימים";
     }, 1000);
 
-    // --- LocalStorage ---
+    // --- LocalStorage --- 
+    // שיניתי את שמות המפתחות לגרסה 2 (v2) כדי שהאפליקציה תתרענן לנתונים המתוקנים בלי שתצטרך למחוק היסטוריה
     function getData(key, defaultData) {
         const saved = localStorage.getItem(key);
         return saved ? JSON.parse(saved) : defaultData;
@@ -528,14 +553,13 @@
         localStorage.setItem(key, JSON.stringify(data));
     }
 
-    // --- סנכרון עם ענן (Google Sheets) ---
     function getAllKeysForSync() {
         return {
-            'trip2026_days': localStorage.getItem('trip2026_days'),
-            'trip2026_dests': localStorage.getItem('trip2026_dests'),
-            'trip2026_places': localStorage.getItem('trip2026_places'),
-            'trip2026_checklist': localStorage.getItem('trip2026_checklist'),
-            'trip2026_docs': localStorage.getItem('trip2026_docs')
+            'trip2026_v2_days': localStorage.getItem('trip2026_v2_days'),
+            'trip2026_v2_dests': localStorage.getItem('trip2026_v2_dests'),
+            'trip2026_v2_places': localStorage.getItem('trip2026_v2_places'),
+            'trip2026_v2_checklist': localStorage.getItem('trip2026_v2_checklist'),
+            'trip2026_v2_docs': localStorage.getItem('trip2026_v2_docs')
         };
     }
 
@@ -666,20 +690,24 @@
     }
 
     // --- ימים ללו"ז הראשי ---
+    // הפרידו את ימים 9 עד 12 לימים עצמאיים
     const defaultDays = [
-        { id: 'day1', icon: '🛬', color: 'var(--pastel-green)', title: 'יום 1 (27.9) - מתחילים!', desc: 'נחיתה, רכב, ונסיעה לטבע באיתקה', content: '<h4><span class="time-badge">05:15</span> נחיתה ורכב</h4><p>נחיתה בניוארק, איסוף מזוודות ורכב שכור.</p>' },
-        { id: 'day2', icon: '🌊', color: 'var(--pastel-blue)', title: 'יום 2 (28.9) - מפלי הניאגרה', desc: 'הגעה למפלים בצד האמריקאי', content: '<h4><span class="time-badge">12:00</span> המפלים</h4><p>צ\'ק אין במלון Seneca Niagara.</p>' },
-        { id: 'day3', icon: '🔔', color: 'var(--pastel-purple)', title: 'יום 3 (29.9) - פנסילבניה', desc: 'לצ\'וורת\' ונסיעה להאריסברג', content: '<h4><span class="time-badge">15:00</span> להאריסברג</h4><p>המשך נסיעה למלון Hampton Inn.</p>' },
-        { id: 'day4', icon: '🏍️', color: 'var(--pastel-orange)', title: 'יום 4 (30.9) - ברזל ושוקולד', desc: 'הארלי, הרשיז והגעה לניוארק', content: '<h4><span class="time-badge">09:00</span> בוקר</h4><p>מפעל הארלי או הרשיז.</p>' },
-        { id: 'day5', icon: '🏙️', color: 'var(--pastel-pink)', title: 'יום 5 (1.10) - מידטאון', desc: 'טיימס סקוור, תצפית ומרכז העיר', content: '<p>טיימס סקוור, בראיינט פארק, ותצפית (כמו ה-Summit).</p>', section: 'nyc' },
-        { id: 'day6', icon: '🗽', color: 'var(--pastel-pink)', title: 'יום 6 (2.10) - דאונטאון', desc: 'גראונד זירו, וול סטריט ופסל החירות', content: '<p>אזור הגראונד זירו, וול סטריט, והפלגה במעבורת.</p>', section: 'nyc' },
-        { id: 'day7', icon: '🛍️', color: 'var(--pastel-pink)', title: 'יום 7 (3.10) - שופינג ג\'רזי', desc: 'אאוטלט ג\'רזי גארדנס', content: '<p>נסיעה לניו ג\'רזי ליום של קניות פטורות ממס.</p>', section: 'nyc' },
-        { id: 'day8', icon: '🚂', color: 'var(--pastel-pink)', title: 'יום 8 (4.10) - צ\'לסי', desc: 'צ\'לסי מרקט, ההיי-ליין והאדסון יארדס', content: '<p>הליכה על פסי הרכבת הישנים ואוכל טוב בשוק צ\'לסי.</p>', section: 'nyc' },
-        { id: 'day9', icon: '🚕', color: 'var(--pastel-pink)', title: 'ימים 9-12 (5-8.10)', desc: 'ברוקלין, סוהו, וטיסה הביתה', content: '<p>חציית גשר ברוקלין, סוהו, ליטל איטלי. ב-8.10 טיסה חזרה בשעה 13:30.</p>', section: 'nyc' }
+        { id: 'day1', icon: '🛬', color: 'var(--pastel-green)', title: 'יום 1 (27.9) - מתחילים!', desc: 'נחיתה, רכב, ונסיעה לטבע באיתקה', content: 'נחיתה בניוארק, איסוף מזוודות ורכב שכור.\nנסיעה לכיוון איתקה והתארגנות במלון.' },
+        { id: 'day2', icon: '🌊', color: 'var(--pastel-blue)', title: 'יום 2 (28.9) - מפלי הניאגרה', desc: 'הגעה למפלים בצד האמריקאי', content: 'צ\'ק אין במלון Seneca Niagara.\nביקור במפלים, שייט Maid of the Mist.' },
+        { id: 'day3', icon: '🔔', color: 'var(--pastel-purple)', title: 'יום 3 (29.9) - פנסילבניה', desc: 'לצ\'וורת\' ונסיעה להאריסברג', content: 'ביקור בפארק המדינה לצ\'וורת\'.\nהמשך נסיעה למלון Hampton Inn בהאריסברג.' },
+        { id: 'day4', icon: '🏍️', color: 'var(--pastel-orange)', title: 'יום 4 (30.9) - ברזל ושוקולד', desc: 'הארלי, הרשיז והגעה לניוארק', content: 'ביקור במפעל הארלי דיווידסון או בפארק הרשיז.\nנסיעה חזרה לכיוון ניו יורק/ניוארק.' },
+        { id: 'day5', icon: '🏙️', color: 'var(--pastel-pink)', title: 'יום 5 (1.10) - מידטאון', desc: 'טיימס סקוור, תצפית ומרכז העיר', content: 'התאקלמות בניו יורק.\nטיימס סקוור, בראיינט פארק, ותצפית (כמו ה-Summit).', section: 'nyc' },
+        { id: 'day6', icon: '🗽', color: 'var(--pastel-pink)', title: 'יום 6 (2.10) - דאונטאון', desc: 'גראונד זירו, וול סטריט ופסל החירות', content: 'אזור הגראונד זירו והאנדרטה.\nוול סטריט, והפלגה במעבורת לכיוון פסל החירות / סטטן איילנד.', section: 'nyc' },
+        { id: 'day7', icon: '🛍️', color: 'var(--pastel-pink)', title: 'יום 7 (3.10) - שופינג ג\'רזי', desc: 'אאוטלט ג\'רזי גארדנס', content: 'נסיעה לניו ג\'רזי ליום של קניות פטורות ממס.\nהשלמות במנהטן בערב.', section: 'nyc' },
+        { id: 'day8', icon: '🚂', color: 'var(--pastel-pink)', title: 'יום 8 (4.10) - צ\'לסי', desc: 'צ\'לסי מרקט, ההיי-ליין והאדסון יארדס', content: 'הליכה על פסי הרכבת הישנים (היי-ליין).\nארוחת צהריים בשוק צ\'לסי וביקור באדסון יארדס.', section: 'nyc' },
+        { id: 'day9', icon: '🌉', color: 'var(--pastel-pink)', title: 'יום 9 (5.10) - ברוקלין', desc: 'גשר ברוקלין ו-DUMBO', content: 'חציית גשר ברוקלין ברגל.\nהסתובבות באזור DUMBO ופארק גשר ברוקלין. אולי קפיצה לוויליאמסבורג בערב.', section: 'nyc' },
+        { id: 'day10', icon: '🥟', color: 'var(--pastel-pink)', title: 'יום 10 (6.10) - סוהו וליטל איטלי', desc: 'שופינג בוטיק ואוכל טוב', content: 'הסתובבות בסוהו (SoHo) - חנויות ורחובות יפים.\nהליכה לליטל איטלי וצ\'יינה טאון לארוחת צהריים / ערב.', section: 'nyc' },
+        { id: 'day11', icon: '🌳', color: 'var(--pastel-pink)', title: 'יום 11 (7.10) - סנטרל פארק', desc: 'טבע באמצע העיר ומוזיאונים', content: 'השכרת אופניים או הליכה בסנטרל פארק.\nאופציה לביקור במוזיאון הטבע או המטרופוליטן.', section: 'nyc' },
+        { id: 'day12', icon: '✈️', color: 'var(--pastel-pink)', title: 'יום 12 (8.10) - חוזרים הביתה', desc: 'השלמות וטיסה חזרה', content: 'בוקר חופשי להשלמות אחרונות באזור המלון.\nנסיעה לשדה התעופה לטיסה LY28 חזרה לארץ בשעה 13:30.', section: 'nyc' }
     ];
 
     function renderDays() {
-        const days = getData('trip2026_days', defaultDays);
+        const days = getData('trip2026_v2_days', defaultDays);
         const container = document.getElementById('days-container');
         container.innerHTML = '';
         let nycTitleAdded = false;
@@ -699,7 +727,7 @@
     }
 
     function openDayInfo(id) {
-        const days = getData('trip2026_days', defaultDays);
+        const days = getData('trip2026_v2_days', defaultDays);
         const day = days.find(d => d.id === id);
         document.getElementById('modal-title').innerHTML = day.title;
         document.getElementById('modal-title').style.color = day.color;
@@ -709,12 +737,13 @@
     }
 
     function openEditDay(id) {
-        const days = getData('trip2026_days', defaultDays);
+        const days = getData('trip2026_v2_days', defaultDays);
         const day = days.find(d => d.id === id);
         document.getElementById('edit-day-id').value = day.id;
         document.getElementById('edit-day-title').value = day.title;
         document.getElementById('edit-day-desc').value = day.desc;
-        document.getElementById('edit-day-content').value = day.content;
+        // ממיר תגיות <br> בחזרה לירידת שורה בתיבת הטקסט
+        document.getElementById('edit-day-content').value = day.content.replace(/<br\s*[\/]?>/gi, '\n');
         closeModal('info-modal');
         document.getElementById('edit-day-modal').classList.add('active');
     }
@@ -722,19 +751,20 @@
     function saveDayEdit(event) {
         event.preventDefault();
         const id = document.getElementById('edit-day-id').value;
-        const days = getData('trip2026_days', defaultDays);
+        const days = getData('trip2026_v2_days', defaultDays);
         const index = days.findIndex(d => d.id === id);
         if(index !== -1) {
             days[index].title = document.getElementById('edit-day-title').value;
             days[index].desc = document.getElementById('edit-day-desc').value;
-            days[index].content = document.getElementById('edit-day-content').value;
-            saveData('trip2026_days', days);
+            // שומר ירידות שורה בצורה שתיראה טוב ב-HTML
+            days[index].content = document.getElementById('edit-day-content').value.replace(/\n/g, '<br>');
+            saveData('trip2026_v2_days', days);
             renderDays();
             closeModal('edit-day-modal');
         }
     }
 
-    // --- יעדים ומקומות (הלוגיקה החדשה עם "תיקיות" ימי ניו יורק) ---
+    // --- יעדים ומקומות ---
     const defaultDestinations = [
         { id: 'ithaca', name: 'איתקה', icon: '🌲', color: '#81c784' },
         { id: 'niagara', name: 'ניאגרה', icon: '🌊', color: '#64b5f6' },
@@ -743,7 +773,7 @@
     ];
 
     function renderDestinations() {
-        const dests = getData('trip2026_dests', defaultDestinations);
+        const dests = getData('trip2026_v2_dests', defaultDestinations);
         const grid = document.getElementById('destinations-grid');
         grid.innerHTML = '';
         dests.forEach((dest) => {
@@ -759,7 +789,7 @@
     }
 
     let currentDestination = '';
-    let currentNycDay = ''; // משתנה ששומר באיזה תת-יום אנחנו בניו יורק
+    let currentNycDay = ''; 
 
     const defaultPlaces = [
         // Ithaca
@@ -772,9 +802,9 @@
         { dest: 'niagara', day: '', category: 'קפה', name: 'Tim Hortons', rating: 4.2, price: '$', hours: '06:00 - 22:00', distance: '4 דקות הליכה', address: '5543 Victoria Ave, Niagara Falls', desc: 'חוויית חובה קנדית! קפה ודונאט ברשת המפורסמת ביותר.' },
         { dest: 'niagara', day: '', category: 'קפה', name: 'Starbucks (Clifton Hill)', rating: 4.3, price: '$$', hours: '06:30 - 23:00', distance: '10 דקות הליכה', address: '4960 Clifton Hill, Niagara Falls', desc: 'נקודה מושלמת לעצור בה, לקחת קפה לדרך, ולהמשיך ברגל לתצפית.' },
         
-        // NYC (משויך לתיקיות/ימים)
+        // NYC 
         { dest: 'nyc', day: 'day5', category: 'מסעדה', name: 'Carmine\'s Italian', rating: 4.5, price: '$$', hours: '11:30 - 23:00', distance: 'מידטאון', address: '200 W 44th St, NY', desc: 'אוכל איטלקי ענקי לחלוקה בטיימס סקוור.' },
-        { dest: 'nyc', day: 'day7', category: 'שופינג', name: 'The Mills at Jersey Gardens', rating: 4.6, price: '$$', hours: '10:00 - 20:00', distance: 'כ-45 דקות מנהטן', address: '651 Kapkowski Rd, Elizabeth, NJ', desc: 'אאוטלט ענק ומקורה. אין מס על ביגוד והנעלה. שפע של חנויות ספורט עם מלאי מעולה למידות גדולות (47 ומעלה).' },
+        { dest: 'nyc', day: 'day7', category: 'שופינג', name: 'The Mills at Jersey Gardens', rating: 4.6, price: '$$', hours: '10:00 - 20:00', distance: 'כ-45 דקות מנהטן', address: '651 Kapkowski Rd, Elizabeth, NJ', desc: 'אאוטלט ענק ומקורה. אין מס על ביגוד והנעלה. שפע של חנויות ספורט עם מלאי מעולה למידות גדולות.' },
         { dest: 'nyc', day: 'day8', category: 'מסעדה', name: 'Chelsea Market', rating: 4.7, price: '$$', hours: '08:00 - 21:00', distance: 'צ\'לסי', address: '75 9th Ave, New York, NY', desc: 'שוק אוכל מקורה ומטורף. חוויה קולינרית.' }
     ];
 
@@ -783,10 +813,8 @@
         document.getElementById('destinations-view').style.display = 'none';
         
         if (destId === 'nyc') {
-            // אם לחצו על ניו יורק -> פותחים את מסך בחירת הימים
             document.getElementById('nyc-days-view').style.display = 'block';
         } else {
-            // אם לחצו על עיר אחרת -> פותחים ישר את מסך המקומות
             currentNycDay = '';
             document.getElementById('places-view').style.display = 'block';
             document.getElementById('current-dest-title').innerText = "המלצות ב" + destName;
@@ -816,10 +844,8 @@
         document.getElementById('places-view').style.display = 'none';
         
         if (currentDestination === 'nyc') {
-            // חוזרים למסך התיקיות של ניו יורק
             document.getElementById('nyc-days-view').style.display = 'block';
         } else {
-            // חוזרים למסך הערים הראשי
             document.getElementById('destinations-view').style.display = 'block';
         }
     }
@@ -829,19 +855,14 @@
 
         const container = document.getElementById('places-container');
         container.innerHTML = '';
-        const allPlaces = getData('trip2026_places', defaultPlaces);
+        const allPlaces = getData('trip2026_v2_places', defaultPlaces);
         
         const filtered = allPlaces.map((p, index) => ({...p, originalIndex: index}))
             .filter(place => {
-                // חייב להיות בעיר שנבחרה
                 if (place.dest !== currentDestination) return false;
-                
-                // אם אנחנו בניו יורק, חייב להתאים לתיקייה (היום) שבחרנו
                 if (currentDestination === 'nyc' && place.day !== currentNycDay) return false;
                 
-                // סינון קטגוריה
                 const matchCategory = categoryValue === "all" || place.category === categoryValue;
-
                 return matchCategory;
             });
 
@@ -892,13 +913,12 @@
 
     function savePlace(event) {
         event.preventDefault();
-        const allPlaces = getData('trip2026_places', defaultPlaces);
+        const allPlaces = getData('trip2026_v2_places', defaultPlaces);
         const index = parseInt(document.getElementById('edit-place-index').value);
         
-        // יצירת האובייקט החדש - שיוך אוטומטי לעיר וליום הנוכחי!
         const placeData = {
             dest: currentDestination,
-            day: currentNycDay, // ישייך אוטומטית ל"יום 5" למשל, אם פתחנו את התיקייה הזו
+            day: currentNycDay, 
             category: document.getElementById('new-place-category').value,
             name: document.getElementById('new-place-name').value,
             rating: 5.0, 
@@ -912,19 +932,18 @@
         if (index === -1) {
             allPlaces.push(placeData);
         } else { 
-            // במצב עריכה שומרים על המיקומים המקוריים
             placeData.dest = allPlaces[index].dest; 
             placeData.day = allPlaces[index].day;
             allPlaces[index] = placeData; 
         }
 
-        saveData('trip2026_places', allPlaces);
+        saveData('trip2026_v2_places', allPlaces);
         closeModal('add-place-modal');
         filterPlaces();
     }
 
     function editPlace(index) {
-        const place = getData('trip2026_places', defaultPlaces)[index];
+        const place = getData('trip2026_v2_places', defaultPlaces)[index];
         document.getElementById('edit-place-index').value = index;
         document.getElementById('new-place-name').value = place.name;
         document.getElementById('new-place-category').value = place.category;
@@ -938,9 +957,9 @@
 
     function deletePlace(index) {
         if(confirm("למחוק את המקום הזה?")) {
-            const allPlaces = getData('trip2026_places', defaultPlaces);
+            const allPlaces = getData('trip2026_v2_places', defaultPlaces);
             allPlaces.splice(index, 1);
-            saveData('trip2026_places', allPlaces);
+            saveData('trip2026_v2_places', allPlaces);
             filterPlaces();
         }
     }
@@ -955,7 +974,7 @@
     ];
 
     function renderChecklist() {
-        const list = getData('trip2026_checklist', defaultChecklist);
+        const list = getData('trip2026_v2_checklist', defaultChecklist);
         const container = document.getElementById('checklist-container');
         container.innerHTML = '';
         
@@ -979,19 +998,19 @@
     }
 
     function toggleCheck(id) {
-        const list = getData('trip2026_checklist', defaultChecklist);
+        const list = getData('trip2026_v2_checklist', defaultChecklist);
         const item = list.find(i => i.id === id);
         if(item) {
             item.checked = !item.checked;
-            saveData('trip2026_checklist', list);
+            saveData('trip2026_v2_checklist', list);
             renderChecklist();
         }
     }
 
     function deleteCheckItem(id) {
-        const list = getData('trip2026_checklist', defaultChecklist);
+        const list = getData('trip2026_v2_checklist', defaultChecklist);
         const newList = list.filter(i => i.id !== id);
-        saveData('trip2026_checklist', newList);
+        saveData('trip2026_v2_checklist', newList);
         renderChecklist();
     }
 
@@ -1002,22 +1021,16 @@
 
     function saveCheckItem(event) {
         event.preventDefault();
-        const list = getData('trip2026_checklist', defaultChecklist);
+        const list = getData('trip2026_v2_checklist', defaultChecklist);
         list.push({
             id: Date.now(),
             text: document.getElementById('new-check-text').value,
             category: document.getElementById('new-check-cat').value,
             checked: false
         });
-        saveData('trip2026_checklist', list);
+        saveData('trip2026_v2_checklist', list);
         closeModal('add-check-modal');
         renderChecklist();
-    }
-
-    function changeMap(query, btn) {
-        document.querySelectorAll('.map-filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('live-map-frame').src = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&t=&z=12&ie=UTF8&iwloc=&output=embed`;
     }
 
     // --- מסמכים ---
@@ -1028,7 +1041,7 @@
     ];
 
     function renderDocs() {
-        const docs = getData('trip2026_docs', defaultDocs);
+        const docs = getData('trip2026_v2_docs', defaultDocs);
         const container = document.getElementById('docs-container');
         container.innerHTML = '';
         const categories = ['טיסות', 'תחבורה', 'מלונות', 'כללי'];
@@ -1062,7 +1075,7 @@
 
     function saveDoc(event) {
         event.preventDefault();
-        const docs = getData('trip2026_docs', defaultDocs);
+        const docs = getData('trip2026_v2_docs', defaultDocs);
         const cat = document.getElementById('new-doc-category').value;
         let color = '#aed581'; let icon = '📄';
         if(cat === 'טיסות') { color = '#64b5f6'; icon = '🎫'; }
@@ -1076,16 +1089,16 @@
             link: document.getElementById('new-doc-link').value || '#'
         });
 
-        saveData('trip2026_docs', docs);
+        saveData('trip2026_v2_docs', docs);
         renderDocs();
         closeModal('add-doc-modal');
     }
 
     function deleteDoc(index) {
         if(confirm("למחוק מסמך זה?")) {
-            const docs = getData('trip2026_docs', defaultDocs);
+            const docs = getData('trip2026_v2_docs', defaultDocs);
             docs.splice(index, 1);
-            saveData('trip2026_docs', docs);
+            saveData('trip2026_v2_docs', docs);
             renderDocs();
         }
     }
